@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Campaigns · Instagram Automation{% endblock %}
+{% block content %}
+<header class="page-header">
+  <h1>Campaigns</h1>
+  <p class="subtitle">Automate comment replies and DMs for keyword triggers on your Instagram posts.</p>
+  <button id="new-campaign-btn" class="btn btn-primary">+ New Campaign</button>
+</header>
+
+<section id="campaign-list" class="campaign-list">
+  <p class="empty-state">Loading campaigns...</p>
+</section>
+
+<div id="campaign-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">New Campaign</h2>
+      <button id="modal-close" class="btn-icon">&times;</button>
+    </div>
+    <form id="campaign-form">
+      <input type="hidden" id="campaign_id" name="id" />
+      <div class="field">
+        <label for="post_id">Instagram Post ID</label>
+        <input type="text" id="post_id" name="post_id" placeholder="17895695668004550" required />
+        <p class="hint">Find this via Graph API Explorer — see README "How to get a Post ID".</p>
+      </div>
+
+      <div id="post-preview" class="post-preview hidden">
+        <img id="post-preview-img" src="" alt="Post preview" />
+        <div>
+          <p id="post-preview-caption" class="post-preview-caption"></p>
+          <p id="post-preview-error" class="post-preview-error"></p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="keywords">Trigger Keywords (comma-separated)</label>
+        <input type="text" id="keywords" name="keywords" placeholder="price, info, link" required />
+      </div>
+      <div class="field">
+        <label for="comment_reply">Public Comment Reply</label>
+        <textarea id="comment_reply" name="comment_reply" rows="2" placeholder="Thanks! Check your DMs 📩" required></textarea>
+      </div>
+      <div class="field">
+        <label for="dm_message">Direct Message</label>
+        <textarea id="dm_message" name="dm_message" rows="3" placeholder="Hey! Here's the link you asked for: ..." required></textarea>
+      </div>
+      <div class="field field-checkbox">
+        <label><input type="checkbox" id="is_active" name="is_active" checked /> Active</label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="delete-campaign-btn" class="btn btn-danger hidden">Delete</button>
+        <button type="submit" class="btn btn-primary">Save Campaign</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/campaigns.js"></script>
+{% endblock %}

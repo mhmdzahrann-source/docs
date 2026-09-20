@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Instagram Automation{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>IG Automation</span>
+      </div>
+      <nav>
+        <a href="/dashboard/campaigns" class="{{ 'active' if active_page == 'campaigns' else '' }}">Campaigns</a>
+        <a href="/dashboard/settings" class="{{ 'active' if active_page == 'settings' else '' }}">Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/health" target="_blank">Health check</a>
+      </div>
+    </aside>
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="/static/js/app.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

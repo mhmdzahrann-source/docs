@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Settings · Instagram Automation{% endblock %}
+{% block content %}
+<header class="page-header">
+  <h1>Settings</h1>
+  <p class="subtitle">Connect your Instagram Business account so campaigns can reply to comments and send DMs.</p>
+</header>
+
+<section class="card">
+  <form id="config-form">
+    <div class="field">
+      <label for="access_token">Instagram User Access Token</label>
+      <textarea id="access_token" name="access_token" rows="3" placeholder="Long-lived access token from Graph API Explorer" required></textarea>
+      <p class="hint">Tokens expire after 60 days. See the README for how to generate and refresh a long-lived token.</p>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="page_id">Facebook Page ID</label>
+        <input type="text" id="page_id" name="page_id" placeholder="1234567890" />
+      </div>
+      <div class="field">
+        <label for="instagram_business_account_id">Instagram Business Account ID</label>
+        <input type="text" id="instagram_business_account_id" name="instagram_business_account_id" placeholder="1789..." />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Settings</button>
+    <span id="config-status" class="status-inline"></span>
+  </form>
+</section>
+
+<section class="card muted">
+  <h2>Webhook</h2>
+  <p>Point your Facebook App's webhook to:</p>
+  <code class="code-block">POST https://YOUR_DOMAIN/webhook/instagram</code>
+  <p>Verify token and app secret are read from the server's <code>.env</code> file and are never shown here.</p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/settings.js"></script>
+{% endblock %}
