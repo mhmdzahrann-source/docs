@@ -13,8 +13,20 @@ services:
         sync: false
       - key: WEBHOOK_VERIFY_TOKEN
         sync: false
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: OWNER_WHATSAPP_NUMBER
+        sync: false
+      - key: BUSINESS_NAME
+        value: Khayal
+      - key: BUSINESS_TIMEZONE
+        value: Asia/Riyadh
       - key: DATABASE_URL
-        value: sqlite:///./app.db
+        value: sqlite:////app/data/app.db
     disk:
       name: data
       mountPath: /app/data

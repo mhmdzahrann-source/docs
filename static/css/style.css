@@ -249,3 +249,44 @@ input:focus, textarea:focus { outline: none; border-color: var(--accent); }
   .content { padding: 20px; }
   .field-row { flex-direction: column; gap: 0; }
 }
+
+/* ---------- WhatsApp reservations ---------- */
+
+.hidden { display: none; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-filter { background: var(--surface-alt); color: var(--text-muted); border: 1px solid transparent; }
+.btn-filter.active, .btn-filter:hover { color: var(--text); border-color: var(--accent); }
+
+.reservation-card { flex-wrap: wrap; cursor: default; }
+.reservation-when { min-width: 120px; }
+.reservation-date { font-size: 13px; color: var(--text-muted); }
+.reservation-time { font-size: 20px; font-weight: 700; }
+.reservation-actions { display: flex; gap: 8px; }
+.campaign-post-id a { text-decoration: underline; }
+.badge-pending { background: rgba(255, 184, 0, 0.15); color: #ffb800; }
+
+.handoff-item { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+.handoff-who { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; }
+.handoff-who a { font-size: 13px; color: var(--text-muted); text-decoration: underline; }
+.handoff-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+input[type="number"]:focus { outline: none; border-color: var(--accent); }
+
+@media (max-width: 720px) {
+  /* Three nav links no longer fit in one row on phones: let them wrap. */
+  .sidebar { flex-wrap: wrap; gap: 12px; padding: 16px; }
+  .sidebar nav { flex-wrap: wrap; }
+  .sidebar-footer { display: none; }
+  .content { padding: 20px 16px; min-width: 0; }
+  .reservation-actions { width: 100%; }
+}
