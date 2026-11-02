@@ -1,7 +1,11 @@
+import base64
+import binascii
 import logging
 import os
+import secrets
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 
 from database import SessionLocal, init_db
@@ -12,6 +16,45 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 app = FastAPI(title="Instagram & WhatsApp Automation")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+DASHBOARD_USERNAME = os.getenv("DASHBOARD_USERNAME", "admin")
+DASHBOARD_PASSWORD = os.getenv("DASHBOARD_PASSWORD", "")
+
+# Meta must reach the webhooks and hosts must reach /health without a
+# password; webhooks are protected by their signature check instead.
+PUBLIC_PREFIXES = ("/webhook/", "/health", "/static/")
+
+
+def _credentials_ok(header: str | None) -> bool:
+    if not header or not header.startswith("Basic "):
+        return False
+    try:
+        username, _, password = base64.b64decode(header[6:]).decode("utf-8").partition(":")
+    except (binascii.Error, UnicodeDecodeError):
+        return False
+    return secrets.compare_digest(username.encode(), DASHBOARD_USERNAME.encode()) and secrets.compare_digest(
+        password.encode(), DASHBOARD_PASSWORD.encode()
+    )
+
+
+@app.middleware("http")
+async def require_dashboard_login(request: Request, call_next):
+    """Password-protect the dashboard and its API (HTTP Basic auth).
+
+    Enabled when DASHBOARD_PASSWORD is set. The dashboard holds customer
+    names/phone numbers and can send WhatsApp messages, so always set it
+    in production.
+    """
+
+    if DASHBOARD_PASSWORD and not request.url.path.startswith(PUBLIC_PREFIXES):
+        if not _credentials_ok(request.headers.get("Authorization")):
+            return Response(
+                "Login required",
+                status_code=401,
+                headers={"WWW-Authenticate": 'Basic realm="Dashboard", charset="UTF-8"'},
+            )
+    return await call_next(request)
+
 
 app.include_router(webhook.router)
 app.include_router(api.router)
@@ -68,6 +111,10 @@ def _seed_whatsapp_config_from_env():
 
 @app.on_event("startup")
 def on_startup():
+    if not DASHBOARD_PASSWORD:
+        logging.getLogger("main").warning(
+            "DASHBOARD_PASSWORD is not set: the dashboard and API are open to anyone who can reach this server."
+        )
     init_db()
     _seed_config_from_env()
     _seed_whatsapp_config_from_env()

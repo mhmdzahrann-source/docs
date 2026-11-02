@@ -211,6 +211,8 @@ INSTAGRAM_ACCESS_TOKEN=
 INSTAGRAM_BUSINESS_ACCOUNT_ID=
 FACEBOOK_APP_SECRET=
 WEBHOOK_VERIFY_TOKEN=
+DASHBOARD_USERNAME=admin
+DASHBOARD_PASSWORD=
 DATABASE_URL=sqlite:///./app.db
 WHATSAPP_ACCESS_TOKEN=
 WHATSAPP_PHONE_NUMBER_ID=
@@ -362,12 +364,19 @@ file (including all reservations) is wiped on every redeploy.
 Use the included `render.yaml` (Render Blueprint) — it provisions a Docker
 web service with a `/health` check and a persistent disk. Set the secret
 env vars (`INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID`,
-`FACEBOOK_APP_SECRET`, `WEBHOOK_VERIFY_TOKEN`, `WHATSAPP_ACCESS_TOKEN`,
+`FACEBOOK_APP_SECRET`, `WEBHOOK_VERIFY_TOKEN`, `DASHBOARD_PASSWORD`, `WHATSAPP_ACCESS_TOKEN`,
 `WHATSAPP_PHONE_NUMBER_ID`, `OWNER_WHATSAPP_NUMBER`) in the Render
 dashboard, as they're marked `sync: false`. The database lives on the
 persistent disk (`/app/data/app.db`) so reservations survive redeploys.
 
 ## Security notes
+
+- **Dashboard login:** set `DASHBOARD_PASSWORD` (and optionally
+  `DASHBOARD_USERNAME`, default `admin`). The dashboard and `/api/*` then
+  require that login; your browser prompts for it once. The webhooks and
+  `/health` stay public so Meta and your host can reach them. Without a
+  password the app logs a warning on startup and the dashboard is open to
+  anyone who knows its URL — never deploy it like that.
 
 - Webhook signature verification (`X-Hub-Signature-256`) is enforced on
   every incoming POST to `/webhook/instagram`; requests with a missing or
