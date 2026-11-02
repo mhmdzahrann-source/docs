@@ -23,3 +23,8 @@ async def campaigns_page(request: Request):
 @router.get("/dashboard/settings")
 async def settings_page(request: Request):
     return templates.TemplateResponse(request, "settings.html", {"active_page": "settings"})
+
+
+@router.get("/dashboard/reservations")
+async def reservations_page(request: Request):
+    return templates.TemplateResponse(request, "reservations.html", {"active_page": "reservations"})

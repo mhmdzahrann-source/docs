@@ -1,4 +1,7 @@
-# Instagram Comment-to-DM Automation
+# Instagram Comment-to-DM Automation + WhatsApp Reservation Bot
+
+> **New:** a 24/7 WhatsApp auto-reply bot that takes table reservations in
+> Arabic and English — see [WhatsApp reservation bot](#whatsapp-reservation-bot).
 
 A self-hosted, ManyChat-style automation tool for Instagram: when someone
 comments a trigger keyword on one of your posts, this app automatically
@@ -19,10 +22,14 @@ unofficial/private Instagram APIs.
 /
 ├── main.py              # FastAPI app entry point
 ├── instagram.py         # Instagram Graph API client
+├── whatsapp.py          # WhatsApp Cloud API client
+├── booking.py           # WhatsApp reservation conversation flow (AR/EN)
 ├── models.py            # SQLAlchemy models
 ├── database.py           # DB session setup
 ├── routes/
-│   ├── webhook.py       # Webhook endpoints
+│   ├── webhook.py       # Instagram webhook endpoints
+│   ├── whatsapp_webhook.py  # WhatsApp webhook (auto-replies)
+│   ├── whatsapp_api.py  # REST API for reservations / WhatsApp settings
 │   ├── dashboard.py     # Dashboard HTML routes
 │   └── api.py           # REST API for campaigns/config
 ├── static/              # CSS + JS for dashboard
@@ -205,6 +212,11 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID=
 FACEBOOK_APP_SECRET=
 WEBHOOK_VERIFY_TOKEN=
 DATABASE_URL=sqlite:///./app.db
+WHATSAPP_ACCESS_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+BUSINESS_NAME=Khayal
+OWNER_WHATSAPP_NUMBER=
+BUSINESS_TIMEZONE=Asia/Riyadh
 ```
 
 `INSTAGRAM_ACCESS_TOKEN` and `INSTAGRAM_BUSINESS_ACCOUNT_ID` are optional
@@ -235,6 +247,99 @@ Two practical implications:
    is the officially sanctioned way to "DM" a commenter. You'll see this
    fallback triggered in the logs if a direct `send_dm` call fails.
 
+## WhatsApp reservation bot
+
+Answers every message to your WhatsApp Business number automatically, day
+and night, and takes table bookings:
+
+```
+Customer: مرحبا
+Bot:      أهلاً وسهلاً في Khayal 🌙  [حجز طاولة] [المواعيد والموقع] [التحدث مع موظف]
+Customer: (taps حجز طاولة)
+Bot:      على أي اسم الحجز؟            → محمد
+Bot:      أي يوم؟ [اليوم] [بكرة]       → بكرة / الجمعة / 15/11
+Bot:      كم الساعة؟                   → 9 م / 21:00
+Bot:      كم عدد الأشخاص؟              → ٤
+Bot:      تأكيد الحجز 📋 …              [تأكيد ✅] [تعديل ✏️] [إلغاء]
+Bot:      تم استلام طلب الحجز ✅ سنرسل لك تأكيداً قريباً
+You:      (phone alert) 🔔 New booking request #12 … → Confirm in dashboard
+Bot:      تم تأكيد حجزك في Khayal ✅
+```
+
+- **Arabic + English**, picked automatically from the customer's message.
+  Understands Arabic-Indic digits (٤), "بكرة"/"tomorrow", weekday names,
+  dates like `15/11`, and times like `9 م`, `9pm`, `21:00`.
+- **You stay in control:** bookings arrive as *pending*. Confirm or decline
+  them at **Dashboard → Reservations**, and the customer gets a WhatsApp
+  message either way.
+- **Owner alerts:** every new booking is sent to your own WhatsApp number.
+- **Hours & location:** answered instantly from what you enter in Settings.
+- **Talk to staff:** the bot pauses for that customer (up to 12 hours) and
+  the chat appears under *Chats waiting for staff*, where you can reply from
+  the dashboard and hand it back to the bot.
+- Type **menu / القائمة** to restart or **cancel / إلغاء** to stop a booking
+  at any time. Validation rejects past dates/times, dates more than 60 days
+  out, and parties above your max size (those are pointed to staff).
+- Meta's retried webhook deliveries are de-duplicated, so nobody is ever
+  booked twice.
+
+### Setup
+
+1. **Meta app + WhatsApp.** At [developers.facebook.com](https://developers.facebook.com)
+   → **My Apps → Create App → Business**, then add the **WhatsApp**
+   product. (You can use the same app as the Instagram automation.)
+2. **Phone number.** Under **WhatsApp → API Setup**, either use the free
+   test number (add your own phone under "To" to receive messages) or
+   **Add phone number** for your real business number. Copy the
+   **Phone number ID** — that goes in Settings.
+   - A number registered on the Cloud API normally can't also be used in
+     the WhatsApp / WhatsApp Business phone app. If you need both, check
+     whether Meta's *coexistence* onboarding is available for your number.
+3. **Permanent access token.** In [business.facebook.com](https://business.facebook.com)
+   → **Settings → Users → System users → Add** (Admin) → **Add assets**
+   (your app, full control) → **Generate new token** with
+   `whatsapp_business_messaging` and `whatsapp_business_management`.
+   The temporary token on the API Setup page expires after 24 hours.
+4. **Deploy this app** (see [Deployment](#deployment)) so it has a public
+   `https://` URL.
+5. **Webhook.** In your app → **WhatsApp → Configuration → Edit**:
+   - Callback URL: `https://YOUR_DOMAIN/webhook/whatsapp`
+   - Verify token: the value of `WEBHOOK_VERIFY_TOKEN`
+   - Then under **Webhook fields**, **Subscribe** to `messages`.
+   Make sure `FACEBOOK_APP_SECRET` is that app's secret — every POST is
+   signature-checked.
+6. **Settings page** (`/dashboard/settings` → *WhatsApp reservation bot*):
+   paste the token and phone number ID, and fill in your business name,
+   alert number, opening hours, location and max party size.
+7. Send "hi" to your business number from your phone — the menu should
+   come back within seconds.
+
+### WhatsApp rules worth knowing
+
+- **24-hour window.** A business can send free-form messages only within
+  24 hours of the customer's last message. All bot replies happen inside
+  that window. Confirming/declining a booking much later can fail; the
+  dashboard tells you when it does, and you can call/WhatsApp the customer
+  via the number link. (Using an approved *template* for confirmations is
+  the long-term fix.)
+- **Owner alerts** follow the same rule: they only reach your number if
+  *your* number messaged the business number in the last 24 hours. Send it
+  a quick "hi" each morning, or just watch the Reservations page (it
+  refreshes every 30 seconds).
+- **Pricing.** Replies to customers who message you first are
+  service conversations; check Meta's current WhatsApp pricing for your
+  country.
+- Customers must message you first or have opted in. Don't use this
+  number for unsolicited bulk messages, or Meta will lower its quality
+  rating and limits.
+
+### Bot settings via environment
+
+`WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `BUSINESS_NAME` and
+`OWNER_WHATSAPP_NUMBER` seed the settings on first boot (the dashboard is
+authoritative afterwards). `BUSINESS_TIMEZONE` (default `Asia/Riyadh`)
+decides what "today"/"tomorrow" mean and which times have already passed.
+
 ## Deployment
 
 ### Docker
@@ -247,16 +352,20 @@ docker run -p 8000:8000 --env-file .env ig-automation
 ### Railway
 
 Push this repo to Railway — `railway.toml` configures the Docker build,
-start command, and `/health` health check automatically. Set the four
-secret env vars in the Railway dashboard.
+start command, and `/health` health check automatically. Set the secret
+env vars in the Railway dashboard. Add a **Volume** mounted at `/app/data`
+and set `DATABASE_URL=sqlite:////app/data/app.db` — otherwise the SQLite
+file (including all reservations) is wiped on every redeploy.
 
 ### Render
 
 Use the included `render.yaml` (Render Blueprint) — it provisions a Docker
 web service with a `/health` check and a persistent disk. Set the secret
 env vars (`INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID`,
-`FACEBOOK_APP_SECRET`, `WEBHOOK_VERIFY_TOKEN`) in the Render dashboard, as
-they're marked `sync: false`.
+`FACEBOOK_APP_SECRET`, `WEBHOOK_VERIFY_TOKEN`, `WHATSAPP_ACCESS_TOKEN`,
+`WHATSAPP_PHONE_NUMBER_ID`, `OWNER_WHATSAPP_NUMBER`) in the Render
+dashboard, as they're marked `sync: false`. The database lives on the
+persistent disk (`/app/data/app.db`) so reservations survive redeploys.
 
 ## Security notes
 

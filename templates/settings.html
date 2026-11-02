@@ -34,7 +34,64 @@
   <code class="code-block">POST https://YOUR_DOMAIN/webhook/instagram</code>
   <p>Verify token and app secret are read from the server's <code>.env</code> file and are never shown here.</p>
 </section>
+<header class="page-header">
+  <h1>WhatsApp reservation bot</h1>
+  <p class="subtitle">Answers customers on your WhatsApp Business number 24/7 (Arabic + English) and takes table bookings.</p>
+</header>
+
+<section class="card">
+  <form id="wa-config-form">
+    <div class="field field-checkbox">
+      <label><input type="checkbox" id="wa_bot_enabled" checked /> Bot is on (auto-reply to customers)</label>
+    </div>
+    <div class="field">
+      <label for="wa_access_token">WhatsApp access token</label>
+      <textarea id="wa_access_token" rows="3" placeholder="Permanent System User token from Meta Business Settings"></textarea>
+      <p class="hint">Needs the whatsapp_business_messaging permission. Leave blank to keep the saved token.</p>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="wa_phone_number_id">Phone number ID</label>
+        <input type="text" id="wa_phone_number_id" placeholder="1234567890123456" />
+        <p class="hint">Meta for Developers → your app → WhatsApp → API Setup.</p>
+      </div>
+      <div class="field">
+        <label for="wa_owner_phone">Your WhatsApp number (for alerts)</label>
+        <input type="text" id="wa_owner_phone" placeholder="9665XXXXXXXX" />
+        <p class="hint">International format. Gets a message for every new booking.</p>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="wa_business_name">Business name</label>
+        <input type="text" id="wa_business_name" placeholder="Khayal" />
+      </div>
+      <div class="field">
+        <label for="wa_max_party_size">Max guests per online booking</label>
+        <input type="number" id="wa_max_party_size" min="1" max="500" value="20" />
+      </div>
+    </div>
+    <div class="field">
+      <label for="wa_opening_hours">Opening hours (sent when customers ask)</label>
+      <textarea id="wa_opening_hours" rows="3" placeholder="يومياً 4 م – 1 ص&#10;Daily 4 PM – 1 AM"></textarea>
+    </div>
+    <div class="field">
+      <label for="wa_location">Location</label>
+      <textarea id="wa_location" rows="2" placeholder="Street, district — https://maps.app.goo.gl/..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save WhatsApp Settings</button>
+    <span id="wa-config-status" class="status-inline"></span>
+  </form>
+</section>
+
+<section class="card muted">
+  <h2>WhatsApp webhook</h2>
+  <p>In Meta for Developers → WhatsApp → Configuration, set the callback URL to the address below and subscribe to the <code>messages</code> field:</p>
+  <code class="code-block">https://YOUR_DOMAIN/webhook/whatsapp</code>
+  <p>It uses the same verify token and app secret as the Instagram webhook (from <code>.env</code>).</p>
+</section>
 {% endblock %}
 {% block scripts %}
 <script src="/static/js/settings.js"></script>
+<script src="/static/js/whatsapp-settings.js"></script>
 {% endblock %}

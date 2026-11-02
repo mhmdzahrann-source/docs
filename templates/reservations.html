@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Reservations · WhatsApp Bot{% endblock %}
+{% block content %}
+<header class="page-header">
+  <h1>Reservations</h1>
+  <p class="subtitle">Booking requests taken automatically by the WhatsApp bot. Confirming or declining sends the customer a WhatsApp message.</p>
+  <div class="filter-row">
+    <button class="btn btn-filter active" data-status="pending">Pending</button>
+    <button class="btn btn-filter" data-status="confirmed">Confirmed</button>
+    <button class="btn btn-filter" data-status="declined">Declined</button>
+    <button class="btn btn-filter" data-status="">All</button>
+  </div>
+</header>
+
+<section id="handoff-section" class="card hidden">
+  <h2>Chats waiting for staff</h2>
+  <p class="hint">These customers asked to talk to a person, so the bot is paused for them (for up to 12 hours).</p>
+  <div id="handoff-list"></div>
+</section>
+
+<section id="reservation-list" class="campaign-list">
+  <p class="empty-state">Loading reservations...</p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/reservations.js"></script>
+{% endblock %}
