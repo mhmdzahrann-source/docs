@@ -1,0 +1,43 @@
+{%- if section.blocks.size > 0 -%}
+<section class="wrap" style="padding-bottom:104px">
+  <div class="sec-head reveal">
+    <h2 class="h2">{{ section.settings.heading | escape }} <span class="serif">{{ section.settings.heading_accent | escape }}</span></h2>
+    {%- if section.settings.rating_text != blank -%}<span style="color:var(--ink-3)">{{ section.settings.rating_text | escape }}</span>{%- endif -%}
+  </div>
+  <div class="g3">
+    {%- for block in section.blocks -%}
+      <figure class="review{% if block.settings.dark %} dark{% endif %} reveal" {{ block.shopify_attributes }}>
+        <blockquote>“{{ block.settings.quote | escape }}”</blockquote>
+        <figcaption><strong style="color:{% if block.settings.dark %}var(--on-night){% else %}var(--ink){% endif %}">{{ block.settings.name | escape }}</strong>{% if block.settings.detail != blank %} · {{ block.settings.detail | escape }}{% endif %}</figcaption>
+      </figure>
+    {%- endfor -%}
+  </div>
+</section>
+{%- elsif request.design_mode -%}
+<section class="wrap" style="padding-bottom:64px"><p class="editor-note">Reviews section: add up to 3 real customer reviews as blocks. This section stays hidden on the live store until you add one.</p></section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Khayal reviews",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Riders" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic part)", "default": "say." },
+    { "type": "text", "id": "rating_text", "label": "Rating line", "info": "e.g. 4.9 ★ from 120 reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Review", "default": "Write a real customer review here." },
+        { "type": "text", "id": "name", "label": "Customer name", "default": "Customer name" },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Pyramids Ride" },
+        { "type": "checkbox", "id": "dark", "label": "Dark card", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Khayal reviews" }]
+}
+{% endschema %}

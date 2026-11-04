@@ -1,0 +1,32 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<section class="wrap page">
+  <h1 class="page-title">{{ collection.title | escape }}</h1>
+  {%- if collection.description != blank -%}<div class="rte" style="margin-bottom:28px">{{ collection.description }}</div>{%- endif -%}
+  <div class="toolbar">
+    <span class="muted">{{ 'collections.count' | t: count: collection.products_count }}</span>
+    <label style="display:flex;align-items:center;gap:10px"><span class="muted">{{ 'collections.sort' | t }}</span>
+      <select id="SortBy">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        {%- for option in collection.sort_options -%}<option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>{%- endfor -%}
+      </select>
+    </label>
+  </div>
+  <div class="pgrid">
+    {%- for product in collection.products -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      <p class="muted">{{ 'collections.empty' | t }}</p>
+    {%- endfor -%}
+  </div>
+  {% render 'pagination', paginate: paginate %}
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

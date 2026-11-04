@@ -1,0 +1,35 @@
+{%- liquid
+  assign c = section.settings.collection
+  if c == blank
+    assign c = collections['all']
+  endif
+-%}
+<section class="wrap" style="padding-block:0 104px">
+  <div class="sec-head reveal">
+    <h2 class="h2">{{ section.settings.heading | escape }} <span class="serif">{{ section.settings.heading_accent | escape }}</span></h2>
+    <a href="{{ c.url | default: routes.all_products_collection_url }}" class="btn btn-ghost-s">{{ section.settings.button_label | escape }}</a>
+  </div>
+  <div class="pgrid">
+    {%- for product in c.products limit: section.settings.limit -%}
+      {% render 'product-card', product: product %}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        <div class="pcard"><div class="pcard-media">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div><div class="pcard-title">Product name</div><div class="pcard-price">{{ 1999 | money }}</div></div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New in the" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic part)", "default": "stable." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Empty = all products." },
+    { "type": "range", "id": "limit", "label": "Products shown", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop all →" }
+  ],
+  "presets": [{ "name": "Khayal products" }]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+<section class="wrap page">
+  <div class="form-card">
+    <h1 class="page-title" style="margin:0">{{ 'customer.login' | t }}</h1>
+    <div id="LoginForm">
+    {%- form 'customer_login', style: 'display:flex;flex-direction:column;gap:14px' -%}
+      {%- if form.errors -%}<div class="errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <label for="CustomerEmail">{{ 'contact.email' | t }}</label>
+      <input class="field" type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required>
+      {%- if form.password_needed -%}
+        <label for="CustomerPassword">{{ 'customer.password' | t }}</label>
+        <input class="field" type="password" name="customer[password]" id="CustomerPassword" autocomplete="current-password">
+        <a href="#recover" class="muted" style="font-size:14px">{{ 'customer.forgot' | t }}</a>
+      {%- endif -%}
+      <button class="btn btn-dark" type="submit">{{ 'customer.sign_in' | t }}</button>
+      <a href="{{ routes.account_register_url }}" class="btn btn-ghost-s">{{ 'customer.create' | t }}</a>
+    {%- endform -%}
+    </div>
+    <div id="recover" style="border-top:1px solid var(--line-sand);padding-top:16px">
+    {%- form 'recover_customer_password', style: 'display:flex;flex-direction:column;gap:14px' -%}
+      <h2 style="font-size:20px">{{ 'customer.reset' | t }}</h2>
+      {%- if form.posted_successfully? -%}<p class="form-msg">{{ 'customer.reset_sent' | t }}</p>{%- endif -%}
+      {%- if form.errors -%}<div class="errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <label for="RecoverEmail">{{ 'contact.email' | t }}</label>
+      <input class="field" type="email" name="email" id="RecoverEmail" autocomplete="email" required>
+      <button class="btn btn-ghost-s" type="submit">{{ 'customer.reset' | t }}</button>
+    {%- endform -%}
+    </div>
+    {%- if shop.checkout.guest_login -%}
+      {%- form 'guest_login' -%}<button class="btn btn-ghost-s" type="submit" style="width:100%">{{ 'customer.guest' | t }}</button>{%- endform -%}
+    {%- endif -%}
+  </div>
+</section>

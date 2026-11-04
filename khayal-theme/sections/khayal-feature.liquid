@@ -1,0 +1,33 @@
+<section id="about" class="wrap" style="padding-bottom:104px">
+  <div class="feature reveal">
+    <a href="{{ section.settings.video_url | default: '#about' }}" class="feature-media"{% if section.settings.video_url != blank %} target="_blank" rel="noopener"{% endif %}>
+      {% render 'k-image', image: section.settings.image, fallback: 'khayal-sharktank.jpg', alt: section.settings.image_alt, sizes: '(max-width: 960px) 100vw, 50vw' %}
+      {%- if section.settings.video_url != blank -%}<span class="big-play"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#0E1510" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg></span></span>{%- endif -%}
+    </a>
+    <div class="feature-copy">
+      <span class="eyebrow" style="color:var(--brass-ink)">{{ section.settings.eyebrow | escape }}</span>
+      <h2 style="font-size:clamp(34px,4.6vw,52px);line-height:1;font-weight:600;letter-spacing:-.035em">{{ section.settings.heading | escape }} <span class="serif">{{ section.settings.heading_accent | escape }}</span></h2>
+      {%- if section.settings.text != blank -%}<div style="color:var(--ink-2);max-width:460px">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.video_url != blank and section.settings.button_label != blank -%}
+        <a href="{{ section.settings.video_url }}" class="btn btn-dark" style="align-self:flex-start" target="_blank" rel="noopener">{{ section.settings.button_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image description", "default": "Khayal founders presenting with a black horse on Shark Tank Egypt" },
+    { "type": "text", "id": "eyebrow", "label": "Small title", "default": "As seen on Shark Tank Egypt" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A stable-born idea," },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic part)", "default": "pitched to the Sharks." },
+    { "type": "richtext", "id": "text", "label": "Story", "info": "Two lines: who founded Khayal, why, and what happened on the show." },
+    { "type": "url", "id": "video_url", "label": "Episode link", "info": "Shows the play button and the button below when set." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Watch the episode →" }
+  ],
+  "presets": [{ "name": "Khayal story" }]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{%- capture items -%}
+  {%- for block in section.blocks -%}<span {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span><span class="serif">✦</span>{%- endfor -%}
+{%- endcapture -%}
+<div class="ticker marq" aria-hidden="true">
+  <div class="track">{{ items }}{{ items }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Khayal ticker",
+  "max_blocks": 12,
+  "blocks": [
+    { "type": "item", "name": "Word", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Saddles" }] }
+  ],
+  "presets": [{ "name": "Khayal ticker", "blocks": [{ "type": "item" }, { "type": "item", "settings": { "text": "Bridles" } }, { "type": "item", "settings": { "text": "Training" } }] }]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+<section class="wrap page">
+  {%- form 'create_customer', class: 'form-card' -%}
+    <h1 class="page-title" style="margin:0">{{ 'customer.create' | t }}</h1>
+    {%- if form.errors -%}<div class="errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+    <label for="RegFirst">{{ 'customer.first_name' | t }}</label>
+    <input class="field" type="text" name="customer[first_name]" id="RegFirst" autocomplete="given-name">
+    <label for="RegLast">{{ 'customer.last_name' | t }}</label>
+    <input class="field" type="text" name="customer[last_name]" id="RegLast" autocomplete="family-name">
+    <label for="RegEmail">{{ 'contact.email' | t }}</label>
+    <input class="field" type="email" name="customer[email]" id="RegEmail" autocomplete="email" required>
+    <label for="RegPassword">{{ 'customer.password' | t }}</label>
+    <input class="field" type="password" name="customer[password]" id="RegPassword" autocomplete="new-password" required>
+    <button class="btn btn-dark" type="submit">{{ 'customer.create' | t }}</button>
+  {%- endform -%}
+</section>

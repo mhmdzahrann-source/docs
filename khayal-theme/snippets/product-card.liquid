@@ -1,0 +1,26 @@
+{%- liquid
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+<a href="{{ product.url }}" class="pcard">
+  <div class="pcard-media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: alt: product.featured_media.alt, widths: '300,450,600,900', sizes: '(max-width: 960px) 50vw, 25vw', loading: 'lazy' }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="pcard-badge">{{ 'products.sold_out' | t }}</span>
+    {%- elsif on_sale -%}
+      <span class="pcard-badge sale">{{ 'products.sale' | t }}</span>
+    {%- endif -%}
+  </div>
+  <div class="pcard-title">{{ product.title | escape }}</div>
+  <div class="pcard-price">
+    {%- if product.price_varies -%}{{ 'products.from' | t }} {% endif -%}
+    {{ product.price | money }}
+    {%- if on_sale -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+  </div>
+</a>

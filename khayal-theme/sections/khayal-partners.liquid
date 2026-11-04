@@ -1,0 +1,19 @@
+{%- capture logo -%}{% render 'k-image', image: section.settings.image, fallback: 'khayal-partners.jpg', alt: section.settings.image_alt, sizes: '800px' %}{%- endcapture -%}
+<section class="partners" style="padding-bottom:96px">
+  <p class="eyebrow" style="margin:0 0 26px;text-align:center;color:var(--ink-3)">{{ section.settings.heading | escape }}</p>
+  <div class="marq" style="overflow:hidden">
+    <div class="track">{{ logo }}<span style="display:contents" aria-hidden="true">{% render 'k-image', image: section.settings.image, fallback: 'khayal-partners.jpg', alt: '', sizes: '800px' %}</span></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal partners",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trusted by our partners" },
+    { "type": "image_picker", "id": "image", "label": "Logo strip image", "info": "One wide image with all partner logos on a light background." },
+    { "type": "text", "id": "image_alt", "label": "Partner names (for screen readers)", "default": "Partner logos: AIESEC, Misr Italia, Seven, Egyptian Equestrian Federation, Salt & Butter, Ta, M² Developments" }
+  ],
+  "presets": [{ "name": "Khayal partners" }]
+}
+{% endschema %}

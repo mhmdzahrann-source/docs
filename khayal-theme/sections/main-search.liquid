@@ -1,0 +1,27 @@
+<section class="wrap page">
+  <h1 class="page-title">{{ 'general.search' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:8px;max-width:640px;margin-bottom:36px">
+    <label class="visually-hidden" for="SearchPage">{{ 'general.search' | t }}</label>
+    <input class="field" id="SearchPage" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}">
+    <input type="hidden" name="options[prefix]" value="last">
+    <button class="btn btn-dark" type="submit">{{ 'general.search' | t }}</button>
+  </form>
+  {%- if search.performed -%}
+    {%- paginate search.results by 24 -%}
+      <p class="muted">{{ 'search.results' | t: count: search.results_count, terms: search.terms }}</p>
+      <div class="pgrid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- else -%}
+            <a href="{{ item.url }}" class="pcard"><div class="pcard-title">{{ item.title | escape }}</div><div class="pcard-price">{{ item.content | strip_html | truncatewords: 20 }}</div></a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

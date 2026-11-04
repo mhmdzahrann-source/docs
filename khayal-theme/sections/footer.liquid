@@ -1,0 +1,93 @@
+<footer class="band" style="padding-top:88px">
+  <div class="wrap">
+    <div class="foot-top">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <h2 style="font-size:clamp(36px,5vw,56px);line-height:1;font-weight:600;letter-spacing:-.04em">{{ section.settings.cta_heading | escape }}<br><span class="serif" style="color:var(--brass)">{{ section.settings.cta_heading_accent | escape }}</span></h2>
+        {%- if section.settings.app_store_url != blank or section.settings.play_store_url != blank -%}
+        <div class="stores">
+          {%- if section.settings.app_store_url != blank -%}
+          <a href="{{ section.settings.app_store_url }}" class="store btn-light" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.6-1-2.6-4.2zM14 4.9c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+          {%- endif -%}
+          {%- if section.settings.play_store_url != blank -%}
+          <a href="{{ section.settings.play_store_url }}" class="store btn-ghost-n" style="border:1px solid rgba(243,241,236,.3)" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 3l14 9-14 9z"/></svg><span><small>Get it on</small><b>Google Play</b></span></a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+      {%- form 'customer', id: 'FooterNewsletter', style: 'display:flex;flex-direction:column;gap:12px' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="nl-email" style="color:var(--on-night)">{{ section.settings.newsletter_label | escape }}</label>
+        <div class="nl">
+          <input id="nl-email" type="email" name="contact[email]" required placeholder="you@example.com" autocomplete="email">
+          <button type="submit" class="btn btn-brass">{{ 'newsletter.subscribe' | t }}</button>
+        </div>
+        <p role="status" style="margin:0;font-size:14px;color:var(--on-night-2);min-height:20px">
+          {%- if form.posted_successfully? -%}{{ 'newsletter.success' | t }}{%- elsif form.errors -%}{{ form.errors | default_errors }}{%- endif -%}
+        </p>
+      {%- endform -%}
+    </div>
+    <div class="cols">
+      <div class="col">
+        <span style="max-width:280px;line-height:1.6">{{ section.settings.about | escape }}</span>
+        {%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone | escape }}</a>{%- endif -%}
+        {%- if section.settings.whatsapp != blank -%}<a href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}" target="_blank" rel="noopener">WhatsApp</a>{%- endif -%}
+        {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}">{{ section.settings.email | escape }}</a>{%- endif -%}
+      </div>
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign title_key = 'col' | append: i | append: '_title'
+          assign menu_key = 'col' | append: i | append: '_menu'
+          assign col_menu = linklists[section.settings[menu_key]]
+        -%}
+        <div class="col">
+          <span class="eyebrow">{{ section.settings[title_key] | escape }}</span>
+          {%- if col_menu.links.size > 0 -%}
+            {%- for link in col_menu.links -%}<a href="{{ link.url }}">{{ link.title | escape }}</a>{%- endfor -%}
+          {%- else -%}
+            {%- case i -%}
+              {%- when 1 -%}<a href="{{ routes.all_products_collection_url }}">All products</a><a href="{{ routes.collections_url }}">Collections</a><a href="{{ routes.search_url }}">Search</a>
+              {%- when 2 -%}<a href="/collections/khayal-rides">Khayal Rides</a><a href="/collections/training">Training</a><a href="/pages/endurance">Endurance</a>
+              {%- when 3 -%}<a href="/pages/contact">Contact</a>{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}
+            {%- endcase -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="giant" aria-hidden="true">{{ section.settings.giant_text | escape }}</div>
+  <div class="wrap legal">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+    <span style="display:flex;gap:16px;flex-wrap:wrap">
+      {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+      {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+      {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Shop, ride & train" },
+    { "type": "text", "id": "cta_heading_accent", "label": "Heading (gold italic part)", "default": "with Khayal." },
+    { "type": "url", "id": "app_store_url", "label": "App Store link", "info": "The button is hidden while this is empty." },
+    { "type": "url", "id": "play_store_url", "label": "Google Play link", "info": "The button is hidden while this is empty." },
+    { "type": "text", "id": "newsletter_label", "label": "Newsletter text", "default": "New drops, ride dates and members-only offers" },
+    { "type": "header", "content": "Contact" },
+    { "type": "textarea", "id": "about", "label": "About text", "default": "Horse supplies, riding gear and unforgettable rides, from Cairo’s stables to the Giza plateau." },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number", "info": "International format, e.g. +20 100 000 0000" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "header", "content": "Link columns" },
+    { "type": "text", "id": "col1_title", "label": "Column 1 title", "default": "Shop" },
+    { "type": "link_list", "id": "col1_menu", "label": "Column 1 menu" },
+    { "type": "text", "id": "col2_title", "label": "Column 2 title", "default": "Khayal" },
+    { "type": "link_list", "id": "col2_menu", "label": "Column 2 menu" },
+    { "type": "text", "id": "col3_title", "label": "Column 3 title", "default": "Help" },
+    { "type": "link_list", "id": "col3_menu", "label": "Column 3 menu", "info": "Empty = Contact + your store policies." },
+    { "type": "text", "id": "giant_text", "label": "Big background word", "default": "khayal" }
+  ]
+}
+{% endschema %}

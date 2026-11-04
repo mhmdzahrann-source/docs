@@ -1,0 +1,66 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="top">
+  <div class="wrap">
+    <div class="nav">
+      <a href="{{ routes.root_url }}" class="logo">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, style: 'height:28px;width:auto' }}
+        {%- else -%}
+          {{ section.settings.logo_text | default: shop.name | downcase }}<b>.</b>
+        {%- endif -%}
+      </a>
+      <nav class="links" aria-label="Main">
+        {%- if menu.links.size > 0 -%}
+          {%- for link in menu.links -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>{%- endfor -%}
+        {%- else -%}
+          {% render 'default-nav' %}
+        {%- endif -%}
+      </nav>
+      <div class="nav-right">
+        <button class="icon-btn" id="searchBtn" aria-label="{{ 'general.search' | t }}" aria-expanded="false" aria-controls="searchBar"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+        {%- if shop.customer_accounts_enabled -%}
+          <a class="icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{{ 'general.account' | t }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a>
+        {%- endif -%}
+        <a class="icon-btn" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart' | t }} ({{ cart.item_count }})"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>{% if cart.item_count > 0 %}<span class="cart-count" aria-hidden="true">{{ cart.item_count }}</span>{% endif %}</a>
+        {%- if section.settings.book_label != blank -%}
+          <a href="{{ section.settings.book_link | default: '/collections/khayal-rides' }}" class="btn btn-brass nav-book">{{ section.settings.book_label | escape }}</a>
+        {%- endif -%}
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </div>
+    <div class="search-bar" id="searchBar" hidden>
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <label class="visually-hidden" for="HeaderSearch">{{ 'general.search' | t }}</label>
+        <input class="field" id="HeaderSearch" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}">
+        <input type="hidden" name="options[prefix]" value="last">
+        <button class="btn btn-brass" type="submit">{{ 'general.search' | t }}</button>
+      </form>
+    </div>
+    <nav class="drawer" id="drawer" aria-label="Mobile" hidden>
+      {%- if menu.links.size > 0 -%}
+        {%- for link in menu.links -%}<a href="{{ link.url }}">{{ link.title | escape }}</a>{%- endfor -%}
+      {%- else -%}
+        {% render 'default-nav' %}
+      {%- endif -%}
+      {%- if section.settings.book_label != blank -%}
+        <a href="{{ section.settings.book_link | default: '/collections/khayal-rides' }}" class="btn btn-brass" style="margin-top:6px">{{ section.settings.book_label | escape }}</a>
+      {%- endif -%}
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to show the text logo." },
+    { "type": "text", "id": "logo_text", "label": "Text logo", "default": "khayal" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "info": "Leave empty to use the built-in Khayal links (Shop, Rides, Training, Endurance, Contact)." },
+    { "type": "text", "id": "book_label", "label": "Button label", "default": "Book a ride" },
+    { "type": "url", "id": "book_link", "label": "Button link", "info": "Defaults to your Khayal Rides collection." }
+  ]
+}
+{% endschema %}

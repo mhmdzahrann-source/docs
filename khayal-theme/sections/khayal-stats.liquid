@@ -1,0 +1,27 @@
+<section class="wrap" style="padding-block:80px 8px">
+  <div class="stats">
+    {%- for block in section.blocks -%}
+      <div class="stat" {{ block.shopify_attributes }}><span class="stat-n">{{ block.settings.prefix | escape }}<span data-count="{{ block.settings.number }}">{{ block.settings.number }}</span>{{ block.settings.suffix | escape }}</span><span class="stat-l">{{ block.settings.label | escape }}</span></div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal numbers",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Number",
+      "settings": [
+        { "type": "text", "id": "prefix", "label": "Before number" },
+        { "type": "number", "id": "number", "label": "Number", "default": 100 },
+        { "type": "text", "id": "suffix", "label": "After number", "default": "+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Products in the tack room" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Khayal numbers", "blocks": [{ "type": "stat" }] }]
+}
+{% endschema %}

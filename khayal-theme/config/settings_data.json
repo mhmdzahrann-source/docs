@@ -1,0 +1,11 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_night": "#0E1510",
+      "color_sand": "#F3F1EC",
+      "color_brass": "#D2A65E",
+      "social_instagram": "https://www.instagram.com/kha_y_all/"
+    }
+  }
+}

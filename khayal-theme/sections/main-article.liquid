@@ -1,0 +1,10 @@
+<article class="wrap page">
+  <p class="muted">{{ article.published_at | time_tag: format: 'date' }}</p>
+  <h1 class="page-title">{{ article.title | escape }}</h1>
+  {%- if article.image -%}<div style="border-radius:var(--r-lg);overflow:hidden;margin-bottom:32px">{{ article.image | image_url: width: 1600 | image_tag: alt: article.title, sizes: '100vw' }}</div>{%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+  <p style="margin-top:40px"><a href="{{ blog.url }}" class="btn btn-ghost-s">← {{ blog.title | escape }}</a></p>
+</article>
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

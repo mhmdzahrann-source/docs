@@ -1,0 +1,28 @@
+<section class="wrap page">
+  <p><a href="{{ routes.account_url }}" class="muted">← {{ 'customer.account' | t }}</a></p>
+  <h1 class="page-title">{{ 'customer.addresses' | t }}</h1>
+  {%- paginate customer.addresses by 10 -%}
+  <div class="g2">
+    {%- for address in customer.addresses -%}
+      <div class="form-card" style="margin:0">
+        {%- if address == customer.default_address -%}<span class="eyebrow" style="color:var(--brass-ink)">{{ 'customer.default' | t }}</span>{%- endif -%}
+        {{ address | format_address }}
+        {%- form 'customer_address', address, style: 'display:flex;flex-direction:column;gap:10px' -%}
+          {% render 'address-fields', form: form, address: address %}
+          <button class="btn btn-dark" type="submit">{{ 'customer.save' | t }}</button>
+        {%- endform -%}
+        <form method="post" action="{{ address.url }}"><input type="hidden" name="_method" value="delete"><button class="link-btn" type="submit">{{ 'cart.remove' | t }}</button></form>
+      </div>
+    {%- endfor -%}
+    <div class="form-card" style="margin:0">
+      <h2 style="font-size:20px">{{ 'customer.add_address' | t }}</h2>
+      {%- form 'customer_address', customer.new_address, style: 'display:flex;flex-direction:column;gap:10px' -%}
+        {%- if form.errors -%}<div class="errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+        {% render 'address-fields', form: form, address: customer.new_address %}
+        <button class="btn btn-dark" type="submit">{{ 'customer.add_address' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+  {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+</section>

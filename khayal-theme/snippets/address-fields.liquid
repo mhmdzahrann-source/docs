@@ -1,0 +1,11 @@
+{%- assign fid = form.id | default: 'new' -%}
+<label for="AF-first-{{ fid }}">{{ 'customer.first_name' | t }}</label><input class="field" id="AF-first-{{ fid }}" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+<label for="AF-last-{{ fid }}">{{ 'customer.last_name' | t }}</label><input class="field" id="AF-last-{{ fid }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name">
+<label for="AF-a1-{{ fid }}">{{ 'customer.address1' | t }}</label><input class="field" id="AF-a1-{{ fid }}" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1">
+<label for="AF-a2-{{ fid }}">{{ 'customer.address2' | t }}</label><input class="field" id="AF-a2-{{ fid }}" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+<label for="AF-city-{{ fid }}">{{ 'customer.city' | t }}</label><input class="field" id="AF-city-{{ fid }}" name="address[city]" value="{{ form.city }}" autocomplete="address-level2">
+<label for="AF-country-{{ fid }}">{{ 'customer.country' | t }}</label><select class="field" id="AF-country-{{ fid }}" name="address[country]" data-default="{{ form.country | default: 'Egypt' }}">{{ all_country_option_tags }}</select>
+<label for="AF-prov-{{ fid }}">{{ 'customer.province' | t }}</label><input class="field" id="AF-prov-{{ fid }}" name="address[province]" value="{{ form.province }}" autocomplete="address-level1">
+<label for="AF-zip-{{ fid }}">{{ 'customer.zip' | t }}</label><input class="field" id="AF-zip-{{ fid }}" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code">
+<label for="AF-phone-{{ fid }}">{{ 'contact.phone' | t }}</label><input class="field" id="AF-phone-{{ fid }}" name="address[phone]" value="{{ form.phone }}" autocomplete="tel">
+<label style="display:flex;gap:8px;align-items:center;font-weight:500">{{ form.set_as_default_checkbox }} {{ 'customer.set_default' | t }}</label>

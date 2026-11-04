@@ -1,0 +1,386 @@
+{
+  "sections": {
+    "hero": {
+      "type": "khayal-hero",
+      "settings": {}
+    },
+    "ticker": {
+      "type": "khayal-ticker",
+      "settings": {},
+      "blocks": {
+        "ticker-0": {
+          "type": "item",
+          "settings": {
+            "text": "Saddles"
+          }
+        },
+        "ticker-1": {
+          "type": "item",
+          "settings": {
+            "text": "Bridles"
+          }
+        },
+        "ticker-2": {
+          "type": "item",
+          "settings": {
+            "text": "Pyramids Rides"
+          }
+        },
+        "ticker-3": {
+          "type": "item",
+          "settings": {
+            "text": "Training"
+          }
+        },
+        "ticker-4": {
+          "type": "item",
+          "settings": {
+            "text": "Endurance"
+          }
+        },
+        "ticker-5": {
+          "type": "item",
+          "settings": {
+            "text": "As seen on Shark Tank"
+          }
+        }
+      },
+      "block_order": [
+        "ticker-0",
+        "ticker-1",
+        "ticker-2",
+        "ticker-3",
+        "ticker-4",
+        "ticker-5"
+      ]
+    },
+    "stats": {
+      "type": "khayal-stats",
+      "settings": {},
+      "blocks": {
+        "stats-0": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": 100,
+            "suffix": "+",
+            "label": "Products in the tack room"
+          }
+        },
+        "stats-1": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": 60,
+            "suffix": "K+",
+            "label": "App riders"
+          }
+        },
+        "stats-2": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": 4,
+            "suffix": "",
+            "label": "Locations"
+          }
+        },
+        "stats-3": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": 30,
+            "suffix": "%",
+            "label": "Max savings"
+          }
+        }
+      },
+      "block_order": [
+        "stats-0",
+        "stats-1",
+        "stats-2",
+        "stats-3"
+      ]
+    },
+    "tack": {
+      "type": "khayal-tack-room",
+      "settings": {},
+      "blocks": {
+        "tack-0": {
+          "type": "tile",
+          "settings": {
+            "title": "Saddles",
+            "subtitle": "Best seller category",
+            "size": "big",
+            "fallback": "khayal-cat-saddles.jpg"
+          }
+        },
+        "tack-1": {
+          "type": "tile",
+          "settings": {
+            "title": "Bridles",
+            "size": "normal",
+            "fallback": "khayal-cat-bridles.jpg"
+          }
+        },
+        "tack-2": {
+          "type": "tile",
+          "settings": {
+            "title": "Halters",
+            "size": "normal",
+            "fallback": "khayal-cat-halters.jpg"
+          }
+        },
+        "tack-3": {
+          "type": "tile",
+          "settings": {
+            "title": "Accessories",
+            "size": "normal",
+            "fallback": "khayal-cat-accessories.jpg"
+          }
+        },
+        "tack-4": {
+          "type": "tile",
+          "settings": {
+            "title": "Martingales",
+            "size": "normal",
+            "fallback": "khayal-cat-martingales.jpg"
+          }
+        },
+        "tack-5": {
+          "type": "tile",
+          "settings": {
+            "title": "Equestrian tools",
+            "subtitle": "Helmets · Boots · Stable",
+            "size": "wide",
+            "fallback": "khayal-tools.jpg"
+          }
+        },
+        "tack-6": {
+          "type": "chip",
+          "settings": {
+            "title": "Saddle Pads"
+          }
+        },
+        "tack-7": {
+          "type": "chip",
+          "settings": {
+            "title": "Grooming"
+          }
+        },
+        "tack-8": {
+          "type": "chip",
+          "settings": {
+            "title": "Feed Bags"
+          }
+        },
+        "tack-9": {
+          "type": "chip",
+          "settings": {
+            "title": "Hay Nets"
+          }
+        },
+        "tack-10": {
+          "type": "chip",
+          "settings": {
+            "title": "Endurance Gear"
+          }
+        }
+      },
+      "block_order": [
+        "tack-0",
+        "tack-1",
+        "tack-2",
+        "tack-3",
+        "tack-4",
+        "tack-5",
+        "tack-6",
+        "tack-7",
+        "tack-8",
+        "tack-9",
+        "tack-10"
+      ]
+    },
+    "products": {
+      "type": "khayal-featured-products",
+      "settings": {}
+    },
+    "experiences": {
+      "type": "khayal-experiences",
+      "settings": {},
+      "blocks": {
+        "experiences-0": {
+          "type": "card",
+          "settings": {
+            "fallback": "khayal-ride.jpg",
+            "image_alt": "Rider smiling on horseback in front of the Giza pyramids",
+            "tags": "Giza Pyramids, Sunrise & sunset, All levels",
+            "title": "Pyramids Ride",
+            "price": "",
+            "per": "rider",
+            "button_label": "Book your ride →",
+            "default_link": "/collections/khayal-rides"
+          }
+        },
+        "experiences-1": {
+          "type": "card",
+          "settings": {
+            "fallback": "khayal-train.jpg",
+            "image_alt": "Group of riders with a white and a chestnut horse at the training yard",
+            "tags": "Private & group, Beginner → Pro",
+            "title": "Riding Training",
+            "price": "",
+            "per": "session",
+            "button_label": "Book training →",
+            "default_link": "/collections/training"
+          }
+        }
+      },
+      "block_order": [
+        "experiences-0",
+        "experiences-1"
+      ]
+    },
+    "portfolio": {
+      "type": "khayal-portfolio",
+      "settings": {},
+      "blocks": {
+        "portfolio-0": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-ride.jpg",
+            "category": "Rides",
+            "title": "Sunset at the Pyramids",
+            "subtitle": "Guided ride · Giza"
+          }
+        },
+        "portfolio-1": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-train.jpg",
+            "category": "Training",
+            "title": "Group training day",
+            "subtitle": "Training yard"
+          }
+        },
+        "portfolio-2": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-sharktank.jpg",
+            "category": "Media",
+            "title": "Shark Tank Egypt",
+            "subtitle": "TV feature"
+          }
+        },
+        "portfolio-3": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-tools.jpg",
+            "category": "Campaigns",
+            "title": "Equestrian Tools shoot",
+            "subtitle": "Product campaign"
+          }
+        },
+        "portfolio-4": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-cat-saddles.jpg",
+            "category": "Campaigns",
+            "title": "Signature Tack series",
+            "subtitle": "Stable photoshoot"
+          }
+        },
+        "portfolio-5": {
+          "type": "item",
+          "settings": {
+            "fallback": "khayal-hero.jpg",
+            "category": "Events",
+            "title": "Stable day",
+            "subtitle": "Khayal community"
+          }
+        }
+      },
+      "block_order": [
+        "portfolio-0",
+        "portfolio-1",
+        "portfolio-2",
+        "portfolio-3",
+        "portfolio-4",
+        "portfolio-5"
+      ]
+    },
+    "reels": {
+      "type": "khayal-reels",
+      "settings": {},
+      "blocks": {
+        "reels-0": {
+          "type": "reel",
+          "settings": {
+            "fallback": "khayal-ride.jpg",
+            "caption": "Pyramids Ride"
+          }
+        },
+        "reels-1": {
+          "type": "reel",
+          "settings": {
+            "fallback": "khayal-train.jpg",
+            "caption": "Training day"
+          }
+        },
+        "reels-2": {
+          "type": "reel",
+          "settings": {
+            "fallback": "khayal-hero.jpg",
+            "caption": "Stable life"
+          }
+        },
+        "reels-3": {
+          "type": "reel",
+          "settings": {
+            "fallback": "khayal-cat-bridles.jpg",
+            "caption": "New bridle"
+          }
+        },
+        "reels-4": {
+          "type": "reel",
+          "settings": {
+            "fallback": "khayal-tools.jpg",
+            "caption": "In the tack room"
+          }
+        }
+      },
+      "block_order": [
+        "reels-0",
+        "reels-1",
+        "reels-2",
+        "reels-3",
+        "reels-4"
+      ]
+    },
+    "story": {
+      "type": "khayal-feature",
+      "settings": {}
+    },
+    "partners": {
+      "type": "khayal-partners",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "khayal-reviews",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "stats",
+    "tack",
+    "products",
+    "experiences",
+    "portfolio",
+    "reels",
+    "story",
+    "partners",
+    "reviews"
+  ]
+}

@@ -1,0 +1,52 @@
+{%- comment -%}
+  Renders an uploaded image, or a bundled Khayal photo when none is chosen.
+  Params: image, fallback (asset file name), alt, sizes, style, loading
+{%- endcomment -%}
+{%- liquid
+  assign img_sizes = sizes | default: '100vw'
+  assign img_loading = loading | default: 'lazy'
+  assign fw = 1200
+  assign fh = 1200
+  case fallback
+    when 'khayal-cat-accessories.jpg'
+      assign fw = 440
+      assign fh = 439
+    when 'khayal-cat-bridles.jpg'
+      assign fw = 440
+      assign fh = 439
+    when 'khayal-cat-halters.jpg'
+      assign fw = 440
+      assign fh = 439
+    when 'khayal-cat-martingales.jpg'
+      assign fw = 440
+      assign fh = 439
+    when 'khayal-cat-saddles.jpg'
+      assign fw = 441
+      assign fh = 440
+    when 'khayal-hero.jpg'
+      assign fw = 900
+      assign fh = 612
+    when 'khayal-partners.jpg'
+      assign fw = 1400
+      assign fh = 106
+    when 'khayal-ride.jpg'
+      assign fw = 860
+      assign fh = 649
+    when 'khayal-sharktank.jpg'
+      assign fw = 820
+      assign fh = 460
+    when 'khayal-tools.jpg'
+      assign fw = 820
+      assign fh = 724
+    when 'khayal-train.jpg'
+      assign fw = 860
+      assign fh = 759
+  endcase
+-%}
+{%- if image != blank -%}
+  {{ image | image_url: width: 1800 | image_tag: alt: alt, sizes: img_sizes, widths: '360,540,720,960,1200,1500,1800', loading: img_loading, style: style }}
+{%- elsif fallback != blank -%}
+  <img src="{{ fallback | asset_url }}" width="{{ fw }}" height="{{ fh }}" alt="{{ alt | escape }}" loading="{{ img_loading }}"{% if style %} style="{{ style }}"{% endif %}>
+{%- else -%}
+  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+{%- endif -%}

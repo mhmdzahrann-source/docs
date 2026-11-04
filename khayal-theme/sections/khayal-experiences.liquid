@@ -1,0 +1,57 @@
+<section id="experiences" class="band" style="padding-block:104px 24px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="h2">{{ section.settings.heading | escape }}<br><span class="serif" style="color:var(--brass)">{{ section.settings.heading_accent | escape }}</span></h2>
+      {%- if section.settings.text != blank -%}<p style="margin:0;max-width:380px;color:var(--on-night-2)">{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="g2">
+      {%- for block in section.blocks -%}
+      <article class="card reveal" {{ block.shopify_attributes }}>
+        {% render 'k-image', image: block.settings.image, fallback: block.settings.fallback, alt: block.settings.image_alt, sizes: '(max-width: 960px) 100vw, 50vw' %}
+        <div class="card-body">
+          <div class="tags">
+            {%- assign tags = block.settings.tags | split: ',' -%}
+            {%- for t in tags -%}{%- assign tt = t | strip -%}{%- if tt != blank -%}<span>{{ tt | escape }}</span>{%- endif -%}{%- endfor -%}
+          </div>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <div class="card-foot">
+            {%- if block.settings.price != blank -%}<span class="price">{{ 'experiences.from' | t }} <strong>{{ block.settings.price | escape }}</strong>{% if block.settings.per != blank %} / {{ block.settings.per | escape }}{% endif %}</span>{%- else -%}<span></span>{%- endif -%}
+            <a href="{{ block.settings.link | default: block.settings.default_link | default: routes.all_products_collection_url }}" class="btn btn-brass">{{ block.settings.button_label | escape }}</a>
+          </div>
+        </div>
+      </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal rides & training",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not just gear." },
+    { "type": "text", "id": "heading_accent", "label": "Heading (gold italic part)", "default": "Experiences." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Book a guided ride at the Pyramids or train with our coaches." }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Experience",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback", "label": "Bundled photo (advanced)" },
+        { "type": "text", "id": "image_alt", "label": "Image description" },
+        { "type": "text", "id": "tags", "label": "Tags", "info": "Separate with commas.", "default": "Giza Pyramids, All levels" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pyramids Ride" },
+        { "type": "text", "id": "price", "label": "Price", "info": "e.g. LE 1,500. Empty = hide the price." },
+        { "type": "text", "id": "per", "label": "Price per", "default": "rider" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Book your ride →" },
+        { "type": "url", "id": "link", "label": "Button link", "info": "A product, collection or page where people book." },
+        { "type": "text", "id": "default_link", "label": "Fallback link (advanced)", "info": "Used when Button link is empty." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Khayal rides & training", "blocks": [{ "type": "card" }] }]
+}
+{% endschema %}

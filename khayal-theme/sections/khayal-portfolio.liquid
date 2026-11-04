@@ -1,0 +1,65 @@
+<section id="portfolio" style="background:var(--night);color:var(--on-night);padding-block:24px 112px">
+  <div class="wrap">
+    <div class="sec-head reveal" style="border-top:1px solid var(--line-night);padding-top:80px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span class="eyebrow" style="color:var(--brass)">{{ section.settings.eyebrow | escape }}</span>
+        <h2 class="h2">{{ section.settings.heading_a | escape }} <span class="serif">{{ section.settings.heading_accent | escape }}</span> {{ section.settings.heading_b | escape }}</h2>
+      </div>
+      {%- liquid
+        assign cat_list = ''
+        for block in section.blocks
+          assign cat_list = cat_list | append: block.settings.category | append: '|'
+        endfor
+        assign cats = cat_list | split: '|' | uniq
+      -%}
+      {%- if cats.size > 1 -%}
+      <div class="filters" role="group" aria-label="Filter portfolio" data-filters>
+        <button type="button" data-f="all" aria-pressed="true">{{ 'portfolio.all' | t }}</button>
+        {%- for cat in cats -%}<button type="button" data-f="{{ cat | handleize }}" aria-pressed="false">{{ cat | escape }}</button>{%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+    <div class="pf">
+      {%- for block in section.blocks -%}
+        {%- assign tag = block.settings.category -%}
+        <a href="{{ block.settings.link | default: '#portfolio' }}" class="pf-card" data-k="{{ tag | handleize }}" {{ block.shopify_attributes }}>
+          {% render 'k-image', image: block.settings.image, fallback: block.settings.fallback, alt: block.settings.title, sizes: '(max-width: 960px) 100vw, 33vw' %}
+          <span class="pf-tag">{{ tag | escape }}</span>
+          <div class="pf-meta"><div><div class="pf-title">{{ block.settings.title | escape }}</div>{% if block.settings.subtitle != blank %}<div class="pf-sub">{{ block.settings.subtitle | escape }}</div>{% endif %}</div><span class="arrow">→</span></div>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+    <div style="display:flex;justify-content:center;margin-top:36px"><a href="{{ section.settings.button_link }}" class="btn btn-ghost-n">{{ section.settings.button_label | escape }}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal portfolio",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small title", "default": "Portfolio" },
+    { "type": "text", "id": "heading_a", "label": "Heading start", "default": "Our" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic part)", "default": "work" },
+    { "type": "text", "id": "heading_b", "label": "Heading end", "default": "in the saddle." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "View full portfolio →" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "The button is hidden while this is empty." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Portfolio item",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback", "label": "Bundled photo (advanced)" },
+        { "type": "text", "id": "category", "label": "Category", "default": "Rides", "info": "Items with the same category share a filter button." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Sunset at the Pyramids" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Khayal portfolio", "blocks": [{ "type": "item" }] }]
+}
+{% endschema %}

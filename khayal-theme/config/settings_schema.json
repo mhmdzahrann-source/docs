@@ -1,0 +1,32 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Khayal",
+    "theme_version": "1.0.0",
+    "theme_author": "Khayal",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_night", "label": "Dark green", "default": "#0E1510" },
+      { "type": "color", "id": "color_sand", "label": "Sand background", "default": "#F3F1EC" },
+      { "type": "color", "id": "color_brass", "label": "Gold accent", "default": "#D2A65E" }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram link", "default": "https://www.instagram.com/kha_y_all/" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok link" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook link" }
+    ]
+  }
+]

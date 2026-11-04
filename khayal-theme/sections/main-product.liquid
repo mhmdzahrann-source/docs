@@ -1,0 +1,113 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign show_options = true
+  if product.has_only_default_variant
+    assign show_options = false
+  endif
+-%}
+<section class="wrap page">
+  <div class="product">
+    <div class="gallery">
+      <div class="gallery-main">
+        {%- assign main_media = current_variant.featured_media | default: product.featured_media -%}
+        {%- if main_media -%}
+          {{ main_media | image_url: width: 1600 | image_tag: alt: main_media.alt, widths: '480,720,960,1200,1600', sizes: '(max-width: 960px) 100vw, 55vw', class: 'main-img', loading: 'eager' }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+      <div class="thumbs">
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+          <button type="button" data-thumb="{{ media | image_url: width: 1600 }}" aria-current="{% if media.id == main_media.id %}true{% else %}false{% endif %}" aria-label="{{ 'products.view_image' | t: number: forloop.index }}">
+            {{ media | image_url: width: 160 | image_tag: alt: '', loading: 'lazy' }}
+          </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pinfo">
+      {%- if product.vendor != blank and section.settings.show_vendor -%}<span class="eyebrow" style="color:var(--brass-ink)">{{ product.vendor | escape }}</span>{%- endif -%}
+      <h1>{{ product.title | escape }}</h1>
+      <div class="pprice" data-price>
+        {{ current_variant.price | money }}
+        {%- if current_variant.compare_at_price > current_variant.price -%}<s>{{ current_variant.compare_at_price | money }}</s>{%- endif -%}
+      </div>
+
+      {%- form 'product', product, data-product-form: '', data-money-format: shop.money_format, novalidate: 'novalidate', style: 'display:flex;flex-direction:column;gap:22px' -%}
+        <script type="application/json">{{ product.variants | json }}</script>
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- if show_options -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="opt">
+              <legend>{{ option.name | escape }}</legend>
+              <div class="swatches">
+                {%- for value in option.values -%}
+                  {%- assign oid = 'opt-' | append: section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ oid }}" name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                  <label for="{{ oid }}">{{ value | escape }}</label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endif -%}
+
+        <div class="buy-row">
+          <div class="qty">
+            <button type="button" data-step="-1" aria-label="{{ 'products.decrease' | t }}">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.quantity' | t }}">
+            <button type="button" data-step="1" aria-label="{{ 'products.increase' | t }}">+</button>
+          </div>
+          <button type="submit" name="add" class="btn btn-dark" data-add-btn
+            data-add="{{ 'products.add_to_cart' | t }}"
+            data-soldout="{{ 'products.sold_out' | t }}"
+            data-unavailable="{{ 'products.unavailable' | t }}"
+            {% unless current_variant.available %}disabled{% endunless %}>
+            {%- if current_variant.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+          </button>
+        </div>
+        {%- if section.settings.show_dynamic_checkout -%}{{ form | payment_button }}{%- endif -%}
+        {%- if form.errors -%}<p class="form-msg">{{ form.errors | default_errors }}</p>{%- endif -%}
+      {%- endform -%}
+
+      {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
+      {%- if section.settings.whatsapp_text != blank and section.settings.whatsapp != blank -%}
+        <a class="btn btn-ghost-s" href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}?text={{ section.settings.whatsapp_text | append: ' ' | append: product.title | url_encode }}" target="_blank" rel="noopener">{{ 'products.ask_whatsapp' | t }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.show_related and product.collections.size > 0 -%}
+  {%- assign rel = product.collections.first -%}
+  {%- if rel.products_count > 1 -%}
+  <section class="wrap" style="padding-bottom:104px">
+    <div class="sec-head"><h2 class="h2">{{ 'products.related' | t }} <span class="serif">{{ 'products.related_accent' | t }}</span></h2></div>
+    <div class="pgrid">
+      {%- assign shown = 0 -%}
+      {%- for p in rel.products -%}
+        {%- if p.id == product.id -%}{%- continue -%}{%- endif -%}
+        {% render 'product-card', product: p %}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- if shown == 4 -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show brand", "default": false },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy it now button", "default": true },
+    { "type": "checkbox", "id": "show_related", "label": "Show more from the same collection", "default": true },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number for questions", "info": "International format. Empty = hide the button." },
+    { "type": "text", "id": "whatsapp_text", "label": "WhatsApp message", "default": "Hi Khayal, I have a question about" }
+  ]
+}
+{% endschema %}
