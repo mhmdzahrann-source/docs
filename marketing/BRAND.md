@@ -3,11 +3,23 @@
 Every marketing agent reads this file first.
 
 ## Business
-- **Name:** Khayal
-- **What we offer:** Horseback rides and horse riding training (lessons)
-- **Location:** _TODO: city / area_
-- **Booking link / phone / WhatsApp:** _TODO_
-- **Post language(s):** _TODO: e.g. Arabic + English_
+- **Name:** Khayal (Khayal Horses)
+- **What we offer:** Leisure horseback rides and riding training, including endurance training
+- **Locations:** Giza Pyramids, Saqqara, Ras Sudr (beach), El Shorouk (near Madinaty)*, and the North Coast in summer (Al Alamein)
+- **Booking app (iOS):** Khayal Horses, https://apps.apple.com/eg/app/khayal-horses/id1628432712
+- **Booking phone / WhatsApp:** _TODO: owner will provide_
+- **Booking link:** _TODO: owner will provide_
+- **Post languages:** English **and** Arabic (Egyptian-friendly). Write every caption in both: Arabic first, then English, or two versions.
+
+\* Location heard as "Shiru near Medinti". Confirm the exact name with the owner.
+
+## Accounts
+| Channel | Account | Focus |
+|---|---|---|
+| Instagram (main) | [@kha_y_all](https://www.instagram.com/kha_y_all/) | Giza Pyramids, Saqqara, Ras Sudr, endurance & training |
+| Instagram (summer) | [@al_alamein_stable](https://www.instagram.com/al_alamein_stable/) | North Coast leisure rides, summer season only |
+| TikTok | [@khayalhorses](https://www.tiktok.com/@khayalhorses) | All locations |
+| Facebook | [facebook.com/khayallrides](https://www.facebook.com/khayallrides) | All locations, family offers, packages |
 
 ## Brand voice: Freedom & Horses
 - Feel: wind, open land, the bond between rider and horse, the moment you feel free.
@@ -21,16 +33,37 @@ Every marketing agent reads this file first.
 2. **Learners.** Kids and adults who want regular riding lessons.
 3. **Families.** Parents booking lessons or rides for their children.
 
-## Offers
-- Rides: _TODO: e.g. sunset ride, desert/beach trail, duration, price_
-- Training: _TODO: e.g. beginner course, kids lessons, packages_
+## Offers & prices
+### Rides
+| Ride | Price | Notes |
+|---|---|---|
+| Giza ride (pyramids view) | from **500 EGP** | |
+| Inside the Giza Pyramids area | from **$80** | 1.5 hours inside the pyramids site, great for tourists |
+| Ras Sudr beach ride | **1,000 EGP** | Ride on the beach at Ras Sudr |
+| Saqqara ride | _TODO: price_ | |
+| North Coast leisure ride (summer) | _TODO: price_ | Posted on @al_alamein_stable |
+
+### Training
+| Package | Price | Sessions | Who it's for |
+|---|---|---|---|
+| Beginners (Giza) | **2,000 EGP** | 4 sessions | Complete beginners |
+| Training (El Shorouk, near Madinaty) | **4,500 EGP** | 8 sessions | Learners |
+| Endurance (Giza) | **4,500 EGP** | 4 sessions, every Saturday | Riders who already know the basics: **must be able to trot and canter** |
+
+Rider path to promote: **Beginners → Training → Endurance**.
+
+## Audiences by offer
+- **Tourists (English):** inside-the-pyramids ride ($80) and Saqqara. Bucket-list, "ride a horse at the pyramids".
+- **Cairo locals (Arabic):** Giza rides from 500 EGP, beginner and training packages, Ras Sudr beach trip.
+- **Experienced riders:** endurance package (Saturdays, needs trot & canter).
+- **Summer families & friends:** North Coast rides.
 
 ## Channels
 | Channel | Best content |
 |---|---|
 | Instagram | Reels (galloping, sunset), carousels (tips, rider stories), Stories (daily barn life, polls) |
 | TikTok | 15–30s Reels: first-ride reactions, horse personalities, "a day at Khayal", trending sounds |
-| Facebook | Events, family offers, reviews/testimonials, longer stories, booking posts |
+| Facebook | Events, family offers, package prices, reviews/testimonials, longer stories, booking posts |
 
 ## Content pillars
 1. **Freedom moments.** Riding shots, sunsets, the feeling of the ride.
@@ -47,4 +80,5 @@ Every marketing agent reads this file first.
 
 ## Hashtags (starter set)
 #Khayal #horseriding #horsebackriding #horselove #equestrian #ridingschool #sunsetride #freedom
-_TODO: add local hashtags (city/area)._
+Local: #pyramids #giza #gizapyramids #saqqara #rassudr #northcoast #sahel #alamein #egypt #cairo #enduranceriding
+Arabic: #خيل #ركوب_الخيل #الأهرامات #الجيزة #سقارة #رأس_سدر #الساحل_الشمالي #مصر #خيال

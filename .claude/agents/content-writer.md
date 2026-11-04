@@ -23,6 +23,9 @@ Adapt per channel:
 - Instagram: beautiful, emotional, "freedom" aesthetic.
 - Facebook: warmer and family-focused. Mention booking details and events.
 
+Write every caption in Arabic and English (see BRAND.md).
 Give 2 caption variations per post so the owner can pick.
+Always match the post to the right account: North Coast summer content goes to @al_alamein_stable, everything else to @kha_y_all.
+Every CTA points to the Khayal Horses booking app or the booking phone/link.
 Save drafts to `marketing/drafts/YYYY-MM-DD-<topic>.md`.
 Never publish anything yourself.
