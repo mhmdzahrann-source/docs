@@ -27,3 +27,17 @@ The new Khayal design as a full Shopify theme. Your products, prices, cart, chec
 ## Product data
 
 `khayal-products.csv` lists all 76 products (101 variants) from khayalhorses.com, with prices, availability and links.
+
+## Ride & endurance booking
+
+Customers pick a date, time, distance and number of riders, enter their details, and pay at normal Shopify checkout. Every booking shows up in **Orders** with the date, time, rider name, WhatsApp number and level.
+
+One-time setup (about 5 minutes):
+
+1. **Products → Add product**: title **`Pyramids Ride`**. Set the price per rider. Under **Inventory**, untick "Track quantity" (or set it to the number of seats you have). Untick **"This is a physical product"** so no shipping is charged. Add photos. On the right, set **Theme template → `ride`**. Add it to the **Khayal Rides** collection. Save.
+2. Do the same with title **`Endurance Training`**, template **`endurance`**. Optional: add an option **Distance** with values `7 km` and `20 km` and different prices.
+3. Check that the product URLs are `/products/pyramids-ride` and `/products/endurance-training` (they are, if the titles match). The homepage cards, menu and footer already link there.
+4. On your Endurance page, change the "Register Now" link to `/products/endurance-training`.
+5. In **Customize → Products → Pyramids Ride / Endurance Training** you can change days, time slots, closed dates, the booking cutoff, max riders and rider levels.
+
+Note: Shopify does not limit seats per date. To close a full date, add it under "Closed dates" in the booking section.

@@ -306,3 +306,16 @@ textarea.field{border-radius:18px;padding:14px 18px;min-height:140px}
   .cart-item img{width:72px;height:72px}
   .cart-item .line-total{grid-column:2}
 }
+
+/* booking */
+.bk-group{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.bk-group legend{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bk-dates{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.bk-dates label{flex-direction:column;justify-content:center;min-width:72px;min-height:68px;padding:8px 12px;border-radius:16px;line-height:1.15;text-align:center;scroll-snap-align:start}
+.bk-dates label small{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.bk-dates label b{font-size:20px}
+.bk-label{font-size:14px;font-weight:600}
+.bk-check{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4}
+.bk-check input{width:20px;height:20px;margin-top:1px;accent-color:var(--night);flex:none}
+.bk-info{margin-top:8px;background:var(--paper);border-radius:var(--r-md);padding:22px;font-size:15px}
+.bk-group.invalid legend{color:#8A2A1A}

@@ -244,7 +244,7 @@
             "price": "",
             "per": "rider",
             "button_label": "Book your ride →",
-            "default_link": "/pages/endurance"
+            "default_link": "/products/pyramids-ride"
           }
         },
         "experiences-1": {
@@ -257,7 +257,7 @@
             "price": "",
             "per": "session",
             "button_label": "Register now →",
-            "default_link": "/pages/endurance"
+            "default_link": "/products/endurance-training"
           }
         }
       },

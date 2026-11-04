@@ -42,12 +42,13 @@
         <input type="hidden" name="id" value="{{ current_variant.id }}">
         {%- if show_options -%}
           {%- for option in product.options_with_values -%}
+            {%- assign oi = forloop.index -%}
             <fieldset class="opt">
               <legend>{{ option.name | escape }}</legend>
               <div class="swatches">
                 {%- for value in option.values -%}
-                  {%- assign oid = 'opt-' | append: section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
-                  <input type="radio" id="{{ oid }}" name="option-{{ forloop.parentloop.index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                  {%- assign oid = 'opt-' | append: section.id | append: '-' | append: oi | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ oid }}" name="option-{{ oi }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
                   <label for="{{ oid }}">{{ value | escape }}</label>
                 {%- endfor -%}
               </div>

@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "main": {
+      "type": "khayal-booking",
+      "settings": {
+        "eyebrow": "Endurance Training Program",
+        "button_label": "Register & pay \u2192",
+        "day_sat": true,
+        "day_sun": false,
+        "day_mon": false,
+        "day_tue": false,
+        "day_wed": false,
+        "day_thu": false,
+        "day_fri": false,
+        "times": "8:00 AM, 9:00 AM",
+        "cutoff_hours": 24,
+        "max_riders": 4,
+        "levels": "Intermediate, Advanced",
+        "requirement": "I can ride comfortably at the canter",
+        "info": "<p><strong>Every Saturday</strong> near the Giza Pyramids. Distances from 7 to 20 km.</p><p>Riders must be comfortable at the canter.</p>",
+        "fallback_image": "khayal-train.jpg",
+        "days_ahead": 56
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

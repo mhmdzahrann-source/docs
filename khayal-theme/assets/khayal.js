@@ -72,6 +72,38 @@
   var cartForm=document.getElementById('cartForm');
   if(cartForm){cartForm.addEventListener('change',function(e){if(e.target.matches('input[name="updates[]"]'))cartForm.submit();});}
 
+  /* booking: date chips + validation */
+  document.querySelectorAll('[data-booking-form]').forEach(function(form){
+    var box=form.querySelector('[data-dates]'),msg=form.querySelector('[data-booking-msg]');
+    var days=(form.dataset.days||'').split(',').filter(Boolean).map(Number);
+    var ahead=+form.dataset.ahead||30,cutoff=+form.dataset.cutoff||0;
+    var black=(form.dataset.blackout||'').split(',').map(function(x){return x.trim();}).filter(Boolean);
+    var lang=document.documentElement.lang||'en';
+    function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+    var now=new Date(),earliest=new Date(now.getTime()+cutoff*3600e3),html='',n=0;
+    for(var i=0;i<=ahead;i++){
+      var d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+i);
+      var endOfDay=new Date(d.getFullYear(),d.getMonth(),d.getDate(),23,59);
+      if(days.indexOf(d.getDay())<0||black.indexOf(iso(d))>=0||endOfDay<earliest)continue;
+      var label=d.toLocaleDateString(lang,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+      html+='<input type="radio" id="bk-d-'+n+'" name="properties[Date]" value="'+label+'"><label for="bk-d-'+n+'"><small>'+d.toLocaleDateString(lang,{weekday:'short'})+'</small><b>'+d.getDate()+'</b><small>'+d.toLocaleDateString(lang,{month:'short'})+'</small></label>';
+      n++;
+    }
+    if(box)box.innerHTML=n?html:'<span class="muted">No dates open right now — message us on WhatsApp.</span>';
+    form.addEventListener('submit',function(e){
+      var bad=null,focusEl=null;
+      form.querySelectorAll('.bk-group[data-required]').forEach(function(g){
+        var ok=!!g.querySelector('input:checked');g.classList.toggle('invalid',!ok);
+        if(!ok&&!bad){bad=g.dataset.required;focusEl=g;}
+      });
+      if(!bad){form.querySelectorAll('input[required]').forEach(function(i){
+        if(bad)return;
+        if(i.type==='checkbox'?!i.checked:!i.value.trim()){bad=form.dataset.missing||'Please fill in all required fields.';focusEl=i;}
+      });}
+      if(bad){e.preventDefault();if(msg)msg.textContent=bad;if(focusEl){focusEl.scrollIntoView({block:'center',behavior:'smooth'});if(focusEl.focus)focusEl.focus({preventScroll:true});}}
+    });
+  });
+
   /* address country default */
   document.querySelectorAll('select[data-default]').forEach(function(s){if(s.dataset.default)s.value=s.dataset.default;});
 

@@ -1,0 +1,175 @@
+{%- comment -%}
+  Booking product page: customers pick a date, time slot and number of riders,
+  fill in rider details, and pay through normal Shopify checkout.
+  The booking details are saved on the order as line item properties.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign days = ''
+  if section.settings.day_sun
+    assign days = days | append: '0,'
+  endif
+  if section.settings.day_mon
+    assign days = days | append: '1,'
+  endif
+  if section.settings.day_tue
+    assign days = days | append: '2,'
+  endif
+  if section.settings.day_wed
+    assign days = days | append: '3,'
+  endif
+  if section.settings.day_thu
+    assign days = days | append: '4,'
+  endif
+  if section.settings.day_fri
+    assign days = days | append: '5,'
+  endif
+  if section.settings.day_sat
+    assign days = days | append: '6,'
+  endif
+  assign times = section.settings.times | split: ','
+  assign levels = section.settings.levels | split: ','
+  assign missing_msg = 'booking.missing' | t
+-%}
+<section class="wrap page">
+  <div class="product">
+    <div class="gallery">
+      <div class="gallery-main">
+        {%- assign main_media = current_variant.featured_media | default: product.featured_media -%}
+        {%- if main_media -%}
+          {{ main_media | image_url: width: 1600 | image_tag: alt: main_media.alt, widths: '480,720,960,1200,1600', sizes: '(max-width: 960px) 100vw, 55vw', loading: 'eager' }}
+        {%- else -%}
+          <img src="{{ section.settings.fallback_image | asset_url }}" width="860" height="649" alt="{{ product.title | escape }}">
+        {%- endif -%}
+      </div>
+      {%- if section.settings.info != blank -%}
+        <div class="bk-info rte">{{ section.settings.info }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="pinfo">
+      <span class="eyebrow" style="color:var(--brass-ink)">{{ section.settings.eyebrow | escape }}</span>
+      <h1>{{ product.title | escape }}</h1>
+      <div class="pprice" data-price>
+        {{ current_variant.price | money }}
+        {%- if current_variant.compare_at_price > current_variant.price -%}<s>{{ current_variant.compare_at_price | money }}</s>{%- endif -%}
+      </div>
+      <p class="muted" style="margin:-12px 0 0">{{ 'booking.per_rider' | t }}</p>
+
+      {%- form 'product', product, data-product-form: '', data-booking-form: '', data-money-format: shop.money_format, data-days: days, data-ahead: section.settings.days_ahead, data-cutoff: section.settings.cutoff_hours, data-blackout: section.settings.blackout, data-missing: missing_msg, novalidate: 'novalidate', style: 'display:flex;flex-direction:column;gap:22px' -%}
+        <script type="application/json">{{ product.variants | json }}</script>
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- if section.settings.go_to_checkout -%}<input type="hidden" name="return_to" value="/checkout">{%- endif -%}
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign oi = forloop.index -%}
+            <fieldset class="opt">
+              <legend>{{ option.name | escape }}</legend>
+              <div class="swatches">
+                {%- for value in option.values -%}
+                  {%- assign oid = 'bopt-' | append: oi | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ oid }}" name="option-{{ oi }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                  <label for="{{ oid }}">{{ value | escape }}</label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <fieldset class="bk-group" data-required="{{ 'booking.pick_date' | t }}">
+          <legend>1 · {{ 'booking.date' | t }}</legend>
+          <div class="swatches bk-dates" data-dates><span class="muted">{{ 'booking.loading' | t }}</span></div>
+          <noscript><input class="field" type="date" name="properties[Date]" required></noscript>
+        </fieldset>
+
+        <fieldset class="bk-group" data-required="{{ 'booking.pick_time' | t }}">
+          <legend>2 · {{ 'booking.time' | t }}</legend>
+          <div class="swatches">
+            {%- for t in times -%}
+              {%- assign tt = t | strip -%}
+              {%- if tt != blank -%}
+                <input type="radio" id="bk-time-{{ forloop.index }}" name="properties[Time]" value="{{ tt | escape }}">
+                <label for="bk-time-{{ forloop.index }}">{{ tt | escape }}</label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </fieldset>
+
+        <fieldset class="bk-group">
+          <legend>3 · {{ 'booking.riders' | t }}</legend>
+          <div class="qty" style="align-self:flex-start">
+            <button type="button" data-step="-1" aria-label="{{ 'products.decrease' | t }}">−</button>
+            <input type="number" name="quantity" value="1" min="1" max="{{ section.settings.max_riders }}" aria-label="{{ 'booking.riders' | t }}">
+            <button type="button" data-step="1" aria-label="{{ 'products.increase' | t }}">+</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="bk-group" style="gap:10px">
+          <legend>4 · {{ 'booking.details' | t }}</legend>
+          <label for="bk-name" class="bk-label">{{ 'booking.name' | t }} *</label>
+          <input class="field" id="bk-name" type="text" name="properties[Rider name]" autocomplete="name" required>
+          <label for="bk-phone" class="bk-label">{{ 'booking.phone' | t }} *</label>
+          <input class="field" id="bk-phone" type="tel" name="properties[WhatsApp]" autocomplete="tel" inputmode="tel" required>
+          {%- if levels.size > 0 -%}
+            <label for="bk-level" class="bk-label">{{ 'booking.level' | t }}</label>
+            <select class="field" id="bk-level" name="properties[Level]">
+              {%- for l in levels -%}{%- assign ll = l | strip -%}{%- if ll != blank -%}<option>{{ ll | escape }}</option>{%- endif -%}{%- endfor -%}
+            </select>
+          {%- endif -%}
+          <label for="bk-notes" class="bk-label">{{ 'booking.notes' | t }}</label>
+          <input class="field" id="bk-notes" type="text" name="properties[Notes]" placeholder="{{ 'booking.notes_placeholder' | t }}">
+          {%- if section.settings.requirement != blank -%}
+            <label class="bk-check"><input type="checkbox" name="properties[Confirmed]" value="Yes" required> {{ section.settings.requirement | escape }}</label>
+          {%- endif -%}
+        </fieldset>
+
+        <p class="form-msg" data-booking-msg role="alert"></p>
+        <button type="submit" name="add" class="btn btn-brass" data-add-btn
+          data-add="{{ section.settings.button_label | escape }}"
+          data-soldout="{{ 'booking.full' | t }}"
+          data-unavailable="{{ 'products.unavailable' | t }}"
+          {% unless current_variant.available %}disabled{% endunless %}>
+          {%- if current_variant.available -%}{{ section.settings.button_label | escape }}{%- else -%}{{ 'booking.full' | t }}{%- endif -%}
+        </button>
+        {%- if form.errors -%}<p class="form-msg">{{ form.errors | default_errors }}</p>{%- endif -%}
+      {%- endform -%}
+
+      {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
+      {%- if section.settings.whatsapp != blank -%}
+        <a class="btn btn-ghost-s" href="https://wa.me/{{ section.settings.whatsapp | remove: ' ' | remove: '+' }}?text={{ 'Hi Khayal, I have a question about ' | append: product.title | url_encode }}" target="_blank" rel="noopener">{{ 'products.ask_whatsapp' | t }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Khayal booking",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small title", "default": "Book your ride" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Book & pay →" },
+    { "type": "checkbox", "id": "go_to_checkout", "label": "Go straight to checkout after booking", "default": true },
+    { "type": "header", "content": "Days you run this ride" },
+    { "type": "checkbox", "id": "day_sat", "label": "Saturday", "default": true },
+    { "type": "checkbox", "id": "day_sun", "label": "Sunday", "default": true },
+    { "type": "checkbox", "id": "day_mon", "label": "Monday", "default": true },
+    { "type": "checkbox", "id": "day_tue", "label": "Tuesday", "default": true },
+    { "type": "checkbox", "id": "day_wed", "label": "Wednesday", "default": true },
+    { "type": "checkbox", "id": "day_thu", "label": "Thursday", "default": true },
+    { "type": "checkbox", "id": "day_fri", "label": "Friday", "default": true },
+    { "type": "text", "id": "blackout", "label": "Closed dates", "info": "Dates you are fully booked or closed, format YYYY-MM-DD, separated by commas." },
+    { "type": "range", "id": "days_ahead", "label": "Show dates this many days ahead", "min": 7, "max": 90, "step": 1, "default": 30 },
+    { "type": "range", "id": "cutoff_hours", "label": "Stop booking this many hours before", "min": 0, "max": 72, "step": 1, "default": 12 },
+    { "type": "header", "content": "Times and riders" },
+    { "type": "text", "id": "times", "label": "Time slots", "info": "Separate with commas.", "default": "Sunrise, Sunset" },
+    { "type": "range", "id": "max_riders", "label": "Max riders per booking", "min": 1, "max": 20, "step": 1, "default": 6 },
+    { "type": "text", "id": "levels", "label": "Rider levels", "info": "Separate with commas. Empty = don't ask.", "default": "Beginner, Intermediate, Advanced" },
+    { "type": "text", "id": "requirement", "label": "Required checkbox", "info": "Rider must tick this to book. Empty = hide." },
+    { "type": "header", "content": "Extra" },
+    { "type": "richtext", "id": "info", "label": "Info under the photo", "info": "Meeting point, what to bring, distance…" },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp number", "info": "International format. Empty = hide the button." },
+    { "type": "text", "id": "fallback_image", "label": "Bundled photo (advanced)", "default": "khayal-ride.jpg" }
+  ]
+}
+{% endschema %}

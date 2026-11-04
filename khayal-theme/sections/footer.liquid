@@ -46,7 +46,7 @@
           {%- else -%}
             {%- case i -%}
               {%- when 1 -%}<a href="{{ routes.all_products_collection_url }}">All products</a><a href="{{ routes.collections_url }}">Collections</a><a href="{{ routes.search_url }}">Search</a>
-              {%- when 2 -%}<a href="/pages/endurance">Endurance training</a><a href="/collections/best-seller">Best sellers</a><a href="/collections/saddles">Saddles</a><a href="/collections/martingales">Martingales</a>
+              {%- when 2 -%}<a href="/products/pyramids-ride">Pyramids Ride</a><a href="/products/endurance-training">Endurance training</a><a href="/collections/best-seller">Best sellers</a><a href="/collections/saddles">Saddles</a><a href="/collections/martingales">Martingales</a>
               {%- when 3 -%}<a href="/pages/contact">Contact</a>{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}
             {%- endcase -%}
           {%- endif -%}

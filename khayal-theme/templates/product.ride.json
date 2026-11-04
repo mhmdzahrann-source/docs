@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "khayal-booking",
+      "settings": {
+        "eyebrow": "Pyramids Ride",
+        "button_label": "Book & pay →",
+        "times": "Sunrise, Sunset",
+        "levels": "First time, Beginner, Intermediate, Advanced",
+        "requirement": "",
+        "info": "<p><strong>Where:</strong> Giza Pyramids area. We send the exact meeting point on WhatsApp after booking.</p><p><strong>Bring:</strong> closed shoes, long trousers and water. Helmets are provided.</p>",
+        "fallback_image": "khayal-ride.jpg"
+      }
+    }
+  },
+  "order": ["main"]
+}

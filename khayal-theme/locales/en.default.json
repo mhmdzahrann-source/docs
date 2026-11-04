@@ -7,9 +7,16 @@
     "cart": "Cart",
     "not_found": "Page not found."
   },
-  "newsletter": { "subscribe": "Subscribe", "success": "Thanks for subscribing!" },
-  "experiences": { "from": "From" },
-  "portfolio": { "all": "All" },
+  "newsletter": {
+    "subscribe": "Subscribe",
+    "success": "Thanks for subscribing!"
+  },
+  "experiences": {
+    "from": "From"
+  },
+  "portfolio": {
+    "all": "All"
+  },
   "products": {
     "add_to_cart": "Add to cart",
     "sold_out": "Sold out",
@@ -25,7 +32,10 @@
     "ask_whatsapp": "Ask on WhatsApp"
   },
   "collections": {
-    "count": { "one": "{{ count }} product", "other": "{{ count }} products" },
+    "count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
     "sort": "Sort by",
     "empty": "No products here yet.",
     "all_title": "Collections"
@@ -41,7 +51,12 @@
     "continue": "Continue shopping",
     "empty": "Your cart is empty."
   },
-  "search": { "results": { "one": "{{ count }} result for “{{ terms }}”", "other": "{{ count }} results for “{{ terms }}”" } },
+  "search": {
+    "results": {
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
+    }
+  },
   "contact": {
     "name": "Name",
     "email": "Email",
@@ -88,5 +103,22 @@
     "cancelled": "Cancelled",
     "activate": "Activate account",
     "decline": "Decline invitation"
+  },
+  "booking": {
+    "per_rider": "Price per rider. Riders × price is charged at checkout.",
+    "date": "Pick a date",
+    "time": "Pick a time",
+    "riders": "Number of riders",
+    "details": "Rider details",
+    "name": "Main rider name",
+    "phone": "WhatsApp number",
+    "level": "Riding level",
+    "notes": "Notes (optional)",
+    "notes_placeholder": "Ages, heights, anything we should know",
+    "pick_date": "Please pick a date.",
+    "pick_time": "Please pick a time.",
+    "missing": "Please fill in your name and WhatsApp number, and tick the required box.",
+    "full": "Fully booked",
+    "loading": "Loading dates…"
   }
 }
