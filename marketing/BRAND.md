@@ -7,7 +7,8 @@ Every marketing agent reads this file first.
 - **What we offer:** Leisure horseback rides and riding training, including endurance training
 - **Locations:** Giza Pyramids, Saqqara, Ras Sudr (beach), El Shorouk (near Madinaty), and the North Coast in summer (Al Alamein)
 - **Booking app (iOS):** Khayal Horses, https://apps.apple.com/eg/app/khayal-horses/id1628432712
-- **Booking phone / WhatsApp:** +20 10 65527560
+- **Booking phone / WhatsApp:** +20 10 65527560 and +20 11 11400568 (01111400568)
+- **YouTube:** https://www.youtube.com/channel/UCQKoro2akafJ6GZL7YbOnmw
 - **Booking link:** _TODO: owner will provide_
 - **Post languages:** English **and** Arabic (Egyptian-friendly). Write every caption in both: Arabic first, then English, or two versions.
 
