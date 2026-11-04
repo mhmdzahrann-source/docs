@@ -44,15 +44,17 @@ Every marketing agent reads this file first.
 ### Training
 | Package | Price | Sessions | Who it's for |
 |---|---|---|---|
-| Beginners (Giza) | **2,000 EGP** | 4 sessions | Complete beginners |
+| Beginner course (Giza Pyramids) | **2,000 EGP** | 4 sessions | Complete beginners |
 | Training (El Shorouk, near Madinaty) | **4,500 EGP** | 8 sessions | Learners |
-| Endurance (Giza) | **4,500 EGP** | 4 sessions, every Saturday | Riders who already know the basics: **must be able to trot and canter** |
+| Endurance course (Giza Pyramids) | **4,500 EGP** | 4 sessions, every Saturday | Riders who already know the basics: **must be able to trot and canter** |
+
+Training courses run **at the Giza Pyramids** (beginner and endurance) and in **El Shorouk** (8-session training). Promote them as "learn to ride at the Pyramids" / "اتعلم ركوب الخيل عند الأهرامات".
 
 Rider path to promote: **Beginners → Training → Endurance**.
 
 ## Audiences by offer
 - **Tourists (English):** inside-the-pyramids ride ($80) and Saqqara. Bucket-list, "ride a horse at the pyramids".
-- **Cairo locals (Arabic):** Giza rides from 500 EGP, beginner and training packages, Ras Sudr beach trip.
+- **Cairo locals (Arabic):** Giza rides from 500 EGP, beginner course at the Pyramids (2,000 EGP / 4 sessions), endurance at the Pyramids (4,500 EGP), El Shorouk training, Ras Sudr beach trip.
 - **Experienced riders:** endurance package (Saturdays, needs trot & canter).
 - **Summer families & friends:** North Coast rides.
 
