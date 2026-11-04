@@ -62,7 +62,7 @@
           "type": "stat",
           "settings": {
             "prefix": "",
-            "number": 100,
+            "number": 70,
             "suffix": "+",
             "label": "Products in the tack room"
           }
@@ -112,7 +112,8 @@
             "title": "Saddles",
             "subtitle": "Best seller category",
             "size": "big",
-            "fallback": "khayal-cat-saddles.jpg"
+            "fallback": "khayal-cat-saddles.jpg",
+            "collection": "saddles"
           }
         },
         "tack-1": {
@@ -120,7 +121,8 @@
           "settings": {
             "title": "Bridles",
             "size": "normal",
-            "fallback": "khayal-cat-bridles.jpg"
+            "fallback": "khayal-cat-bridles.jpg",
+            "collection": "bridles"
           }
         },
         "tack-2": {
@@ -128,7 +130,8 @@
           "settings": {
             "title": "Halters",
             "size": "normal",
-            "fallback": "khayal-cat-halters.jpg"
+            "fallback": "khayal-cat-halters.jpg",
+            "collection": "halters"
           }
         },
         "tack-3": {
@@ -136,7 +139,8 @@
           "settings": {
             "title": "Accessories",
             "size": "normal",
-            "fallback": "khayal-cat-accessories.jpg"
+            "fallback": "khayal-cat-accessories.jpg",
+            "collection": "accessories"
           }
         },
         "tack-4": {
@@ -144,46 +148,60 @@
           "settings": {
             "title": "Martingales",
             "size": "normal",
-            "fallback": "khayal-cat-martingales.jpg"
+            "fallback": "khayal-cat-martingales.jpg",
+            "collection": "martingales"
           }
         },
         "tack-5": {
           "type": "tile",
           "settings": {
-            "title": "Equestrian tools",
-            "subtitle": "Helmets · Boots · Stable",
+            "title": "Safety gear",
+            "subtitle": "Helmets · Boots · Protection",
             "size": "wide",
-            "fallback": "khayal-tools.jpg"
+            "fallback": "khayal-tools.jpg",
+            "collection": "safety"
           }
         },
         "tack-6": {
           "type": "chip",
           "settings": {
+            "collection": "saddle-pads",
             "title": "Saddle Pads"
           }
         },
         "tack-7": {
           "type": "chip",
           "settings": {
+            "collection": "grooming",
             "title": "Grooming"
           }
         },
         "tack-8": {
           "type": "chip",
           "settings": {
+            "collection": "feed-bags",
             "title": "Feed Bags"
           }
         },
         "tack-9": {
           "type": "chip",
           "settings": {
+            "collection": "hay-nets",
             "title": "Hay Nets"
           }
         },
         "tack-10": {
           "type": "chip",
           "settings": {
-            "title": "Endurance Gear"
+            "collection": "stirrups",
+            "title": "Stirrups"
+          }
+        },
+        "tack-11": {
+          "type": "chip",
+          "settings": {
+            "collection": "tendon-boots",
+            "title": "Tendon Boots"
           }
         }
       },
@@ -198,12 +216,19 @@
         "tack-7",
         "tack-8",
         "tack-9",
-        "tack-10"
+        "tack-10",
+        "tack-11"
       ]
     },
     "products": {
       "type": "khayal-featured-products",
-      "settings": {}
+      "settings": {
+        "heading": "Best",
+        "heading_accent": "sellers.",
+        "collection": "best-seller",
+        "limit": 8,
+        "button_label": "Shop all →"
+      }
     },
     "experiences": {
       "type": "khayal-experiences",
@@ -219,7 +244,7 @@
             "price": "",
             "per": "rider",
             "button_label": "Book your ride →",
-            "default_link": "/collections/khayal-rides"
+            "default_link": "/pages/endurance"
           }
         },
         "experiences-1": {
@@ -227,12 +252,12 @@
           "settings": {
             "fallback": "khayal-train.jpg",
             "image_alt": "Group of riders with a white and a chestnut horse at the training yard",
-            "tags": "Private & group, Beginner → Pro",
-            "title": "Riding Training",
+            "tags": "Saturdays near the Pyramids, 7–20 km",
+            "title": "Endurance Training",
             "price": "",
             "per": "session",
-            "button_label": "Book training →",
-            "default_link": "/collections/training"
+            "button_label": "Register now →",
+            "default_link": "/pages/endurance"
           }
         }
       },

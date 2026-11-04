@@ -6,13 +6,13 @@
       {%- if section.settings.lead != blank -%}<p class="lead w d6">{{ section.settings.lead | escape }}</p>{%- endif -%}
       <div class="cta-row w d7">
         {%- if section.settings.btn1_label != blank -%}<a href="{{ section.settings.btn1_link | default: routes.all_products_collection_url }}" class="btn btn-light">{{ section.settings.btn1_label | escape }}</a>{%- endif -%}
-        {%- if section.settings.btn2_label != blank -%}<a href="{{ section.settings.btn2_link | default: '/collections/khayal-rides' }}" class="btn btn-ghost-n">{{ section.settings.btn2_label | escape }}</a>{%- endif -%}
+        {%- if section.settings.btn2_label != blank -%}<a href="{{ section.settings.btn2_link | default: '/pages/endurance' }}" class="btn btn-ghost-n">{{ section.settings.btn2_label | escape }}</a>{%- endif -%}
       </div>
     </div>
     <div class="hero-media">
       <div class="hero-img">{% render 'k-image', image: section.settings.image, fallback: 'khayal-hero.jpg', alt: section.settings.image_alt, sizes: '(max-width: 960px) 100vw, 50vw', loading: 'eager' %}</div>
       {%- if section.settings.float_title != blank -%}
-      <a class="float-a" href="{{ section.settings.float_link | default: '/collections/khayal-rides' }}">
+      <a class="float-a" href="{{ section.settings.float_link | default: '/pages/endurance' }}">
         {% render 'k-image', image: section.settings.float_image, fallback: 'khayal-ride.jpg', alt: '' %}
         <div><div style="font-size:14px;font-weight:600">{{ section.settings.float_title | escape }}</div><div style="font-size:12px;color:var(--on-night-2)">{{ section.settings.float_sub | escape }}</div></div>
       </a>
@@ -37,7 +37,7 @@
     { "type": "text", "id": "btn1_label", "label": "Button 1 label", "default": "Shop the collection →" },
     { "type": "url", "id": "btn1_link", "label": "Button 1 link", "info": "Empty = all products." },
     { "type": "text", "id": "btn2_label", "label": "Button 2 label", "default": "Book a ride" },
-    { "type": "url", "id": "btn2_link", "label": "Button 2 link", "info": "Empty = Khayal Rides collection." },
+    { "type": "url", "id": "btn2_link", "label": "Button 2 link", "info": "Empty = Endurance page." },
     { "type": "image_picker", "id": "image", "label": "Image", "info": "Empty = bundled Khayal photo." },
     { "type": "text", "id": "image_alt", "label": "Image description", "default": "Bay horse wearing a navy and leather Khayal halter in the stable" },
     { "type": "header", "content": "Floating card" },
