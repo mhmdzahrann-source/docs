@@ -5,13 +5,11 @@ Every marketing agent reads this file first.
 ## Business
 - **Name:** Khayal (Khayal Horses)
 - **What we offer:** Leisure horseback rides and riding training, including endurance training
-- **Locations:** Giza Pyramids, Saqqara, Ras Sudr (beach), El Shorouk (near Madinaty)*, and the North Coast in summer (Al Alamein)
+- **Locations:** Giza Pyramids, Saqqara, Ras Sudr (beach), El Shorouk (near Madinaty), and the North Coast in summer (Al Alamein)
 - **Booking app (iOS):** Khayal Horses, https://apps.apple.com/eg/app/khayal-horses/id1628432712
-- **Booking phone / WhatsApp:** _TODO: owner will provide_
+- **Booking phone / WhatsApp:** +20 10 65527560
 - **Booking link:** _TODO: owner will provide_
 - **Post languages:** English **and** Arabic (Egyptian-friendly). Write every caption in both: Arabic first, then English, or two versions.
-
-\* Location heard as "Shiru near Medinti". Confirm the exact name with the owner.
 
 ## Accounts
 | Channel | Account | Focus |
@@ -40,8 +38,8 @@ Every marketing agent reads this file first.
 | Giza ride (pyramids view) | from **500 EGP** | |
 | Inside the Giza Pyramids area | from **$80** | 1.5 hours inside the pyramids site, great for tourists |
 | Ras Sudr beach ride | **1,000 EGP** | Ride on the beach at Ras Sudr |
-| Saqqara ride | _TODO: price_ | |
-| North Coast leisure ride (summer) | _TODO: price_ | Posted on @al_alamein_stable |
+| Saqqara ride | **650 EGP** | |
+| North Coast leisure ride (summer) | _Not set yet: do not post prices_ | Posted on @al_alamein_stable |
 
 ### Training
 | Package | Price | Sessions | Who it's for |
