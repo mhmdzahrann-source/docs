@@ -262,7 +262,9 @@ they're marked `sync: false`.
 
 - Webhook signature verification (`X-Hub-Signature-256`) is enforced on
   every incoming POST to `/webhook/instagram`; requests with a missing or
-  invalid signature are rejected with `403`.
+  invalid signature are rejected with `403`. Verification fails closed: if
+  `FACEBOOK_APP_SECRET` is not set, every webhook POST is rejected with `403`
+  (and an error is logged), and a warning is logged at startup.
 - `FACEBOOK_APP_SECRET` and `WEBHOOK_VERIFY_TOKEN` live only in `.env` /
   your host's secret manager — never in the database or served to the
   frontend.

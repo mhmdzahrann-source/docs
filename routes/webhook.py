@@ -39,9 +39,11 @@ async def verify_webhook(request: Request):
 
 
 def _verify_signature(raw_body: bytes, signature_header: str | None) -> bool:
+    # Fail closed: without the app secret we cannot authenticate the request,
+    # so reject it rather than letting unsigned POSTs trigger replies and DMs.
     if not FACEBOOK_APP_SECRET:
-        logger.warning("FACEBOOK_APP_SECRET not set; skipping signature verification (INSECURE)")
-        return True
+        logger.error("FACEBOOK_APP_SECRET is not set; rejecting webhook POST (cannot verify signature)")
+        return False
 
     if not signature_header or not signature_header.startswith("sha256="):
         return False

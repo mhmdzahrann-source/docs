@@ -41,6 +41,11 @@ def _seed_config_from_env():
 
 @app.on_event("startup")
 def on_startup():
+    if not webhook.FACEBOOK_APP_SECRET:
+        logging.getLogger("main").warning(
+            "FACEBOOK_APP_SECRET is not set: every POST to /webhook/instagram will be "
+            "rejected with 403 until it is configured."
+        )
     init_db()
     _seed_config_from_env()
 
