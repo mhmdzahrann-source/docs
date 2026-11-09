@@ -6,3 +6,4 @@ venv/
 app.db
 *.db
 .DS_Store
+investor-review/
