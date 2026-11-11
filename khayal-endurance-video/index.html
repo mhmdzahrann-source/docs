@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خيّال — Endurance video: graphic + storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #120d09;
+    --earth: #1e150e;
+    --panel: #261b12;
+    --line: #4a3726;
+    --sand: #e9d6b4;
+    --sand-dim: #b39d7c;
+    --gold: #e0a640;
+    --gold-hi: #f6d58a;
+    --ember: #c4572a;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--night);
+    color: var(--sand);
+    font-family: "Cairo", system-ui, sans-serif;
+    line-height: 1.6;
+    padding: clamp(16px, 4vw, 48px);
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  [dir="rtl"] { text-align: right; }
+  .ar-display { font-family: "Reem Kufi", "Cairo", sans-serif; }
+
+  /* ---------- page header ---------- */
+  header h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; line-height: 1.2; }
+  header h1 span { color: var(--gold); }
+  header p { color: var(--sand-dim); max-width: 62ch; margin-top: 8px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 44px; padding: 0; list-style: none; }
+  .steps li {
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 16px;
+    font-size: 14px; color: var(--sand-dim);
+  }
+  .steps li.done { border-color: var(--gold); color: var(--gold-hi); }
+  .steps li.now { background: var(--gold); border-color: var(--gold); color: var(--night); font-weight: 700; }
+
+  h2 { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+  .sub { color: var(--sand-dim); margin-bottom: 22px; max-width: 70ch; }
+  section { margin-bottom: 64px; }
+
+  /* ---------- the finished graphic ---------- */
+  .hero { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; justify-items: center; } }
+
+  .frame {
+    width: 100%; max-width: 360px; aspect-ratio: 9 / 16;
+    container-type: inline-size;
+    position: relative; overflow: hidden;
+    border-radius: 18px; border: 1px solid var(--line);
+    background:
+      radial-gradient(120% 60% at 50% 38%, #4a2f17 0%, transparent 62%),
+      linear-gradient(180deg, #0f0a07 0%, #1d130b 55%, #2b1b0e 100%);
+    direction: rtl; text-align: center;
+  }
+  .g-top {
+    position: absolute; inset: 6cqw 7cqw auto; display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .g-brand { font-family: "Reem Kufi", "Cairo", sans-serif; font-weight: 700; font-size: 8cqw; color: var(--gold-hi); }
+  .g-tag { font-size: 3.6cqw; font-weight: 700; color: var(--sand-dim); letter-spacing: 0; }
+
+  .g-kicker {
+    position: absolute; top: 25cqw; inset-inline: 0;
+    font-size: 5.4cqw; font-weight: 700; color: var(--sand);
+  }
+  .g-shoe { position: absolute; top: 34cqw; left: 11cqw; width: 78cqw; }
+  .g-shoe svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .g-count {
+    position: absolute; top: 58cqw; inset-inline: 0;
+    font-weight: 900; font-size: 23cqw; line-height: 1; color: #fff4dc;
+    direction: ltr; font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 9cqw rgba(224, 166, 64, .45);
+  }
+  .g-count .plus { color: var(--gold); display: inline-block; }
+  .g-unit {
+    position: absolute; top: 87cqw; inset-inline: 0;
+    font-family: "Reem Kufi", "Cairo", sans-serif; font-weight: 700; font-size: 9cqw; color: var(--gold-hi);
+  }
+  .g-line {
+    position: absolute; top: 113cqw; inset-inline: 0;
+    font-size: 8.4cqw; font-weight: 900; line-height: 1.25; color: var(--sand);
+  }
+  .g-line em { font-style: normal; color: var(--gold); }
+
+  .g-dunes { position: absolute; inset: auto 0 0 0; height: 46cqw; }
+  .g-dunes svg { width: 100%; height: 100%; display: block; }
+  .g-way {
+    position: absolute; bottom: 5.5cqw; inset-inline: 6cqw;
+    display: flex; justify-content: space-between; font-size: 3.5cqw; font-weight: 700; color: var(--sand);
+  }
+  .g-way span { max-width: 28cqw; line-height: 1.3; }
+  .g-way b { display: block; color: var(--gold-hi); font-size: 4.1cqw; }
+
+  /* motion */
+  .frame.play .g-brand, .frame.play .g-tag { animation: rise .6s both; }
+  .frame.play .g-kicker { animation: rise .6s .25s both; }
+  .frame.play .shoe-arc { stroke-dasharray: 1; animation: draw 1.9s .4s cubic-bezier(.6, 0, .2, 1) both; }
+  .frame.play .nail { animation: pop .3s both; animation-delay: calc(1.2s + var(--i) * .12s); }
+  .frame.play .g-count { animation: rise .5s .5s both; }
+  .frame.play .plus { animation: pop .45s 2.5s cubic-bezier(.3, 1.8, .5, 1) both; }
+  .frame.play .g-unit { animation: rise .5s 2.3s both; }
+  .frame.play .g-line { animation: rise .7s 2.9s both; }
+  .frame.play .route { stroke-dasharray: 1; animation: draw 2.6s .8s ease-in-out both; }
+  .frame.play .g-way span:first-child { animation: rise .5s .8s both; }
+  .frame.play .g-way span:last-child { animation: rise .5s 3.2s both; }
+  .frame.play .flag-end { animation: pop .4s 3.2s both; }
+  .frame.play .flag-mid { animation: pop .4s 2s both; }
+  .frame.play .g-way .mid { animation: rise .5s 2s both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(3cqw); } to { opacity: 1; transform: none; } }
+  @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+  .nail, .flag-end, .flag-mid { transform-box: fill-box; transform-origin: center; }
+  @media (prefers-reduced-motion: reduce) { .frame.play * { animation: none !important; } }
+
+  .notes h3 { font-size: 15px; font-weight: 700; color: var(--gold-hi); margin: 18px 0 4px; }
+  .notes h3:first-child { margin-top: 0; }
+  .notes p, .notes li { color: var(--sand); font-size: 15px; }
+  .notes ul { padding-left: 20px; }
+  .notes .ar { font-size: 18px; font-weight: 700; }
+  button {
+    font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--gold); color: var(--night); border: 0; border-radius: 999px; padding: 9px 22px; margin-top: 22px;
+  }
+  button:hover { background: var(--gold-hi); }
+  button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* ---------- storyboard ---------- */
+  .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 18px; }
+  .card {
+    display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px;
+    background: var(--earth); border: 1px solid var(--line); border-radius: 14px; padding: 14px;
+  }
+  .card.built { border-color: var(--gold); }
+  .thumb {
+    aspect-ratio: 9 / 16; border-radius: 8px; border: 1px dashed var(--sand-dim);
+    background: var(--panel); position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 8px 6px;
+    direction: rtl; text-align: center;
+  }
+  .thumb .shot {
+    font-family: system-ui, sans-serif; direction: ltr;
+    font-size: 9.5px; line-height: 1.3; color: var(--sand-dim); text-transform: uppercase; letter-spacing: .04em;
+  }
+  .thumb .txt { font-size: 12.5px; font-weight: 900; line-height: 1.35; color: var(--sand); overflow-wrap: anywhere; }
+  .thumb .txt em, .card dd em { font-style: normal; color: var(--gold); unicode-bidi: isolate; }
+  .thumb.gfx { border-style: solid; border-color: var(--gold); background: linear-gradient(180deg, #0f0a07, #2b1b0e); }
+  .thumb.footage::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background: repeating-linear-gradient(135deg, transparent 0 9px, rgba(179, 157, 124, .13) 9px 10px);
+  }
+  .thumb > * { position: relative; }
+  .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+  .num { font-weight: 900; font-size: 15px; color: var(--gold-hi); }
+  .dur { font-size: 13px; color: var(--sand-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .card dl { font-size: 13.5px; }
+  .card dt { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--sand-dim); margin-top: 8px; }
+  .card dd { margin: 0; color: var(--sand); overflow-wrap: anywhere; }
+  .card dd[dir="rtl"] { font-size: 15.5px; font-weight: 600; line-height: 1.7; }
+  .badge { font-size: 11px; font-weight: 700; background: var(--gold); color: var(--night); border-radius: 999px; padding: 1px 9px; }
+  .total { margin-top: 18px; color: var(--sand-dim); font-size: 14px; }
+
+  .ask { background: var(--earth); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+  .ask ol { padding-left: 22px; }
+  .ask li { margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1><span class="ar-display">خيّال</span> — the endurance story</h1>
+    <p>A year of raising awareness about endurance, then two months of training and 100+ subscribers. Vertical 9:16 video, voiced and captioned in Egyptian Arabic.</p>
+    <ol class="steps">
+      <li class="done">1 · One finished graphic</li>
+      <li class="now">2 · Storyboard — your review</li>
+      <li>3 · Video — after you approve</li>
+    </ol>
+  </header>
+
+  <section>
+    <h2>The finished graphic — scene 3</h2>
+    <p class="sub">This is the look every other scene will follow. It is the moment the video turns on: the number.</p>
+    <div class="hero">
+      <div class="frame play" id="frame" aria-label="Animated graphic: plus 100 subscribers in two months">
+        <div class="g-top">
+          <span class="g-brand">خيّال</span>
+          <span class="g-tag">الإنديورنس</span>
+        </div>
+        <div class="g-kicker">بنتكلم عن الإنديورنس من سنة</div>
+
+        <div class="g-shoe">
+          <svg viewBox="0 0 400 340" aria-hidden="true">
+            <defs>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f6d58a"/><stop offset=".55" stop-color="#e0a640"/><stop offset="1" stop-color="#a8651f"/>
+              </linearGradient>
+            </defs>
+            <path d="M110 297.2 A140 140 0 1 1 290 297.2" fill="none" stroke="#3a2917" stroke-width="34" stroke-linecap="round"/>
+            <path class="shoe-arc" pathLength="1" d="M110 297.2 A140 140 0 1 1 290 297.2" fill="none" stroke="url(#gold)" stroke-width="34" stroke-linecap="round"/>
+            <g id="nails" fill="#1a1109"></g>
+          </svg>
+        </div>
+        <div class="g-count"><span class="plus">+</span><span id="count">100</span></div>
+        <div class="g-unit">مشترك</div>
+        <div class="g-line">في <em>شهرين</em><br>تدريب بس</div>
+
+        <div class="g-dunes">
+          <svg viewBox="0 0 360 166" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 78 C60 50 120 96 190 70 C250 48 310 62 360 44 V166 H0Z" fill="#3a2513"/>
+            <path d="M0 112 C70 84 150 128 230 100 C290 80 330 92 360 84 V166 H0Z" fill="#241609"/>
+            <path class="route" pathLength="1" d="M322 74 C270 60 250 96 200 92 C150 88 120 70 40 106" fill="none" stroke="#f6d58a" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="322" cy="74" r="5" fill="#f6d58a"/>
+            <circle class="flag-mid" cx="200" cy="92" r="5" fill="#f6d58a"/>
+            <g class="flag-end"><circle cx="40" cy="106" r="9" fill="#c4572a"/><circle cx="40" cy="106" r="3.5" fill="#fff4dc"/></g>
+          </svg>
+        </div>
+        <div class="g-way">
+          <span><b>من سنة</b>بدأنا التوعية</span>
+          <span class="mid"><b>في النص</b>شارك تانك</span>
+          <span><b>النهارده</b>شهرين تدريب</span>
+        </div>
+      </div>
+
+      <div class="notes">
+        <h3>What it says</h3>
+        <p class="ar" dir="rtl">بنتكلم عن الإنديورنس من سنة<br><bdi dir="ltr">+100</bdi> مشترك<br>في شهرين تدريب بس</p>
+        <h3>How it moves (about 4 seconds)</h3>
+        <ul>
+          <li>The horseshoe draws itself in gold while the number counts from 0 to 100.</li>
+          <li>The plus sign pops when the count lands.</li>
+          <li>Below, the trail runs across the dunes from a year ago, past Shark Tank in the middle, to today.</li>
+        </ul>
+        <h3>Look</h3>
+        <ul>
+          <li>Night desert, sand and gold. One horseshoe, no stock clip-art.</li>
+          <li>Type: Reem Kufi for the brand, Cairo for everything else.</li>
+        </ul>
+        <button type="button" id="replay">Replay animation</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Storyboard — the full video</h2>
+    <p class="sub">Eight scenes. Striped frames are real footage you would supply; solid gold frames are graphics I build. Tell me the scene number and what to change.</p>
+    <div class="board" id="board"></div>
+    <p class="total" id="total"></p>
+  </section>
+
+  <section>
+    <h2>What I need from you before the video</h2>
+    <div class="ask">
+      <ol>
+        <li>Check every Arabic line. I wrote the script from your brief; change any wording that does not sound like you.</li>
+        <li>Is the brand written <span class="ar-display">خيّال</span>, and is the number "+100" or an exact figure?</li>
+        <li>Footage: do you have your early awareness posts or videos from a year ago, the Shark Tank clip, and riding clips (training, safety gear, Saturday sessions)? Scenes 1, 2, 5, 6 and 7 are planned around them. Without footage I can make them all graphics.</li>
+        <li>Format: I assumed vertical 9:16 at about 40 seconds for Reels, TikTok and Shorts. Say so if you want 16:9.</li>
+        <li>Scene 8 needs how people sign up: a link, a WhatsApp number, or "DM us".</li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<script>
+  // --- horseshoe nail holes ---
+  const nails = document.getElementById('nails');
+  [158, 196, 234, 306, 344, 22].forEach((deg, i) => {
+    const a = deg * Math.PI / 180;
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', (200 + 140 * Math.cos(a)).toFixed(1));
+    c.setAttribute('cy', (190 + 140 * Math.sin(a)).toFixed(1));
+    c.setAttribute('r', 6);
+    c.setAttribute('class', 'nail');
+    c.style.setProperty('--i', i);
+    nails.appendChild(c);
+  });
+
+  // --- count-up + replay ---
+  const frame = document.getElementById('frame');
+  const count = document.getElementById('count');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let raf;
+  function play() {
+    cancelAnimationFrame(raf);
+    frame.classList.remove('play');
+    void frame.offsetWidth;
+    frame.classList.add('play');
+    if (still) { count.textContent = '100'; return; }
+    count.textContent = '0';
+    const start = performance.now() + 500, dur = 1900;
+    (function tick(now) {
+      const t = Math.min(1, Math.max(0, (now - start) / dur));
+      count.textContent = Math.round(100 * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    })(performance.now());
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  play();
+
+  // --- storyboard ---
+  const scenes = [
+    { s: 5, kind: 'footage', shot: 'Your early posts / videos',
+      text: 'من <em>سنة</em> بنتكلم عن الإنديورنس',
+      visual: 'Fast montage of your first awareness content from a year ago: old posts, early clips, first rides. Dates tick forward.',
+      vo: 'إحنا بنعمل توعية عن الإنديورنس من بدري… من سنة فاتت.' },
+    { s: 3, kind: 'footage', shot: 'Shark Tank clip',
+      text: 'حتى في <em>شارك تانك</em>',
+      visual: 'Short clip of خيّال on the Shark Tank stage, used as one stop on the way, not the headline. Cut out on a rider on the trail.',
+      vo: 'حتى لما طلعنا في شارك تانك، كان كلامنا عن الإنديورنس.' },
+    { s: 6, kind: 'gfx', shot: 'Graphic — built', built: true,
+      text: '<em dir="ltr">+100</em> مشترك<br>في شهرين',
+      visual: 'The graphic above: horseshoe draws, number counts to 100, trail runs from a year ago, past Shark Tank, to today.',
+      vo: 'ودلوقتي بقالنا شهرين بس بندرّب إنديورنس… وبقينا أكتر من ١٠٠ مشترك.' },
+    { s: 3, kind: 'gfx', shot: 'Graphic — text only',
+      text: 'بس مش إنديورنس <em>وبس</em>',
+      visual: 'The horseshoe turns and opens into three gold lines, one for each thing we teach. Sets up scenes 5 to 7.',
+      vo: 'بس إحنا مش بنعلّم إنديورنس وبس.' },
+    { s: 6, kind: 'footage', shot: 'Helmet, girth check, mounting',
+      text: 'اركب صح…<br>واركب <em>بأمان</em>',
+      visual: 'Three quick close-ups: helmet strap, coach checking the girth, a calm first mount. Gold line 1 lights up.',
+      vo: 'بنعلّمك تركب الخيل صح، وبأمان — من أول الخوذة لحد ما تبقى ماسك اللجام وإنت مطمّن.' },
+    { s: 6, kind: 'footage', shot: 'Heritage: tack, old photos',
+      text: 'تاريخنا مع <em>الخيل</em>',
+      visual: 'Traditional tack and archive-style stills mixed with riders today. Warm grade. Gold line 2 lights up.',
+      vo: 'وبنعيش مع بعض تاريخنا وثقافتنا مع الخيل، ونستمتع بيها بالطريقة الصح.' },
+    { s: 5, kind: 'gfx', shot: 'Graphic — week strip',
+      text: 'كل <em>سبت</em>',
+      visual: 'Seven day-dots in a row; السبت grows into a gold horseshoe. Short cutaway of a Saturday group ride behind it.',
+      vo: 'يوم واحد بس في الأسبوع — كل يوم سبت.' },
+    { s: 5, kind: 'gfx', shot: 'Graphic — end card',
+      text: 'مستنيينك<br><em>السبت الجاي</em>',
+      visual: 'Brand name خيّال centred over the dunes, sign-up line underneath, trail keeps running off-frame.',
+      vo: 'مستنيينك السبت الجاي. اشترك دلوقتي وابدأ معانا.' },
+  ];
+  let t = 0;
+  const mmss = n => '0:' + String(n).padStart(2, '0');
+  document.getElementById('board').innerHTML = scenes.map((sc, i) => {
+    const from = t; t += sc.s;
+    return `<article class="card${sc.built ? ' built' : ''}">
+      <div class="thumb ${sc.kind}"><div class="shot">${sc.shot}</div><div class="txt">${sc.text}</div><div></div></div>
+      <div>
+        <div class="meta"><span class="num">Scene ${i + 1} ${sc.built ? '<span class="badge">built</span>' : ''}</span><span class="dur">${mmss(from)}–${mmss(t)} · ${sc.s}s</span></div>
+        <dl>
+          <dt>Voiceover</dt><dd dir="rtl">${sc.vo}</dd>
+          <dt>On screen</dt><dd dir="rtl">${sc.text.replace(/<br>/g, ' ')}</dd>
+          <dt>Visual</dt><dd>${sc.visual}</dd>
+        </dl>
+      </div>
+    </article>`;
+  }).join('');
+  document.getElementById('total').textContent = `Total: ${t} seconds · ${scenes.length} scenes · 9:16 vertical`;
+</script>
+</body>
+</html>
